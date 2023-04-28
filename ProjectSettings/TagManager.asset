@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - bullet
+  - enemy
+  - path
+  - moneyText
+  - tower
+  - UI
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - pathLayer
+  - Water
+  - UI
+  - enemyLayer
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Background
+    uniqueID: 3769956851
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 248722459
+    locked: 0
+  - name: Placeable
+    uniqueID: 550492743
+    locked: 0
