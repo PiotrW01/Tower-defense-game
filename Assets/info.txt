@@ -1,0 +1,7 @@
+﻿wieże powinny być 128x128
+1x sprite na wieże, drugi na ikonki w sklepie
+a
+
+GameEvents.SpawnEnemy:
+✔	array with enemies
+
