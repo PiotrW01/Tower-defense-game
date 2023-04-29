@@ -5,6 +5,7 @@ using UnityEngine;
 public class spawnEnemy : MonoBehaviour
 {
 
+    public int waveNumber = 0;
     public int enemyCount = 10;
     public float enemySpawnTime = 1f;
     public bool isSpawning = false;
@@ -24,8 +25,6 @@ public class spawnEnemy : MonoBehaviour
             CancelInvoke("spawn");
         }
     }
-
-
 
 
     void spawn()
