@@ -391,6 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 598768a144158904787b4783d86e391a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waveNumber: 0
   enemyCount: 10
   enemySpawnTime: 1
   isSpawning: 0
@@ -398,6 +399,7 @@ MonoBehaviour:
   - {fileID: 8167659826699951446, guid: d780d38afc525674b8bdf739a6573bc2, type: 3}
   - {fileID: 8167659826699951446, guid: 4b8bab7ae5e453d45889e251ad6cfd5d, type: 3}
   - {fileID: 8167659826699951446, guid: 9070500abef0a254aa76ee5bdf646a42, type: 3}
+  - {fileID: 8167659826699951446, guid: a742cb8ab76b60a4da311230685877b6, type: 3}
 --- !u!114 &144814786
 MonoBehaviour:
   m_ObjectHideFlags: 0

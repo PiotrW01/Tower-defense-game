@@ -28,7 +28,7 @@ public class BaseTurret : MonoBehaviour
     private Transform lufa;
     private Animation anim;
 
-    public BaseTurret(float attackRadius = 2f, float cooldownTime = 0.6f, int cost = 20)
+    public BaseTurret(float attackRadius = 2f, float cooldownTime = 1.0f, int cost = 180)
     {
         this.attackRadius = attackRadius;
         this.cooldownTime = cooldownTime;
@@ -47,6 +47,7 @@ public class BaseTurret : MonoBehaviour
 
     private void Update()
     {
+        if (!Player.isAlive) return;
         currentTime += Time.deltaTime;
         if(cooldownTime <= currentTime) 
         {

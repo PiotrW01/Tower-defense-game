@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 200
-  speed: 15
+  speed: 30
   hitEnemy: 0
   destroyTime: 3
   enemy: {fileID: 0}

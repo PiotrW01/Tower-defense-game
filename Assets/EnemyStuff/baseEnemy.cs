@@ -9,7 +9,7 @@ public abstract class baseEnemy : MonoBehaviour
     private int droppedMoney;
     private int damageToPlayer;
 
-    public baseEnemy(int health = 100, float speed = 10f, int droppedMoney = 10, int damageToPlayer = 5)
+    public baseEnemy(int health = 100, float speed = 10f, int droppedMoney = 2, int damageToPlayer = 5)
     {
         this.health = health;
         this.speed = speed;

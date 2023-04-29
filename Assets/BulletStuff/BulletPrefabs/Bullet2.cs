@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet2 : BaseBullet
 {
 
-    public Bullet2() : base(200, 15f, 3f) { }
+    public Bullet2() : base(200, 30f, 3f) { }
 
 
 }
