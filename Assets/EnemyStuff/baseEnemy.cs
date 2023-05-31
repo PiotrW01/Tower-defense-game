@@ -4,22 +4,17 @@ using UnityEngine;
 
 public abstract class baseEnemy : MonoBehaviour
 {
-    public int health;
-    private float speed;
-    private int droppedMoney;
-    private int damageToPlayer;
+    private int health;
+    private readonly float speed;
+    private readonly int droppedMoney;
+    private readonly int damageToPlayer;
 
-    public baseEnemy(int health = 100, float speed = 10f, int droppedMoney = 2, int damageToPlayer = 5)
+    public baseEnemy(int health, float speed, int droppedMoney, int damageToPlayer)
     {
         this.health = health;
         this.speed = speed;
         this.droppedMoney = droppedMoney;
         this.damageToPlayer = damageToPlayer;
-    }
-
-    private void Start()
-    {
-        
     }
 
 
@@ -42,22 +37,30 @@ public abstract class baseEnemy : MonoBehaviour
             }
         }*/
 
-    private void FixedUpdate()
-    {
-        if(health <= 0)
-        {
-            Destroy(gameObject);
-            Player.money += droppedMoney;
-        }
-    }
 
-    public float getSpeed()
+    public float GetSpeed()
     {
         return this.speed;
     }
 
-    public int getDamageToPlayer()
+    public int GetDamageToPlayer()
     {
         return this.damageToPlayer;
     }
+
+    public int GetHealth()
+    {
+        return health;
+    }
+
+    public void DealDamageToEnemy(int dmg)
+    {
+        health -= dmg;
+        if(health <= 0)
+        {
+            Destroy(gameObject);
+            Player.AddMoney(droppedMoney);
+        }
+    }
+
 }

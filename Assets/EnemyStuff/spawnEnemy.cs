@@ -7,13 +7,9 @@ using UnityEngine;
 public class spawnEnemy : MonoBehaviour
 {
     public int waveNumber = 0;
-    public int enemyCount = 10;
-    public float enemySpawnTime = 2f;
     public bool isSpawning = false;
     public GameObject[] enemies;
-
     public static EnemyWave[] enemyWaves = new EnemyWave[10];
-
 
     public class EnemyWave
     {
@@ -27,20 +23,25 @@ public class spawnEnemy : MonoBehaviour
 
     };
 
+    //make class for creating enemies
+
     private void Start()
     {
-        // 0: enemyId
-        // 1: enemyAmount
-        // 2: enemySpawnTime 
+        // CreateWave waveNumber
+        // Array 0: enemyId
+        // Array 1: enemyAmount
+        // Array 2: enemySpawnTime 
+        // enemySpawnTime is in miliseconds
 
+        // TODO: przerobiæ listy aby ka¿da zawiera³a enemyid,enemyamount,enemyspawntime
         CreateWave(0, 
             new int[] { 0, 0, 1 }, 
             new int[] { 10, 10, 2 }, 
-            new int[] { 100, 50, 100 });
+            new int[] { 1000, 500, 1000 });
         CreateWave(1,
             new int[] { 2, 3 },
             new int[] { 5, 5 },
-            new int[] { 50, 25 });
+            new int[] { 500, 250 });
         /*       CreateWave(2,
                    new int[] { 1 },
                    new int[] { 1 },
@@ -55,8 +56,6 @@ public class spawnEnemy : MonoBehaviour
                    new int[] { 1 });*/
     }
 
-    //id of enemies in wave
-    //SPAWN TIME HERE IS MULTIPLIED BY 100
     private void CreateWave(int gameWaveNumber, int[] enemiesInWave, int[] amountOfEachEnemy, int[] spawnTimeOfEachEnemy)
     {
         enemyWaves[gameWaveNumber] = new EnemyWave(enemiesInWave.Length);
@@ -90,16 +89,13 @@ public class spawnEnemy : MonoBehaviour
         int currentWaveInWave = 0;
         var v = enemyWaves[waveNumber].enemyWavesinWave;
 
-        Debug.Log(wavesInWave);
-        Debug.Log(currentWaveInWave);
-
         while (currentWaveInWave < wavesInWave)
         {
             for (int i = 0; i < v[currentWaveInWave, 1]; i++) // 1 is array with enemy amount
             {
-                Instantiate(enemies[v[currentWaveInWave, 0]], Waypoints.waypoints[0].transform.localPosition, Quaternion.identity);
+                Instantiate(enemies[v[currentWaveInWave, 0]], Waypoints.StartPos, Quaternion.identity); // 0 is array with enemy types
 
-                yield return new WaitForSeconds((float)v[currentWaveInWave, 2] / 100);
+                yield return new WaitForSeconds((float)v[currentWaveInWave, 2] / 1000); // 2 is array with spawn delay
             }
 
             currentWaveInWave++;

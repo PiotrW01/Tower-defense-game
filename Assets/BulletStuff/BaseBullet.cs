@@ -6,20 +6,19 @@ using static UnityEngine.GraphicsBuffer;
 
 public class BaseBullet : MonoBehaviour
 {
-
-    public int damage = 50;
-    public float speed = 7f;
-    public bool hitEnemy = false;
-    public float destroyTime = 3f;
+    [HideInInspector]
+    public GameObject enemy;
+    public int damage;
+    public float speed;
 
     private Vector3 direction;
     private Vector3 lastEnemyPos;
     private Vector3 initialPos;
-    private bool hasActivated = false;
+    private float destroyTime = 3f;
+    private bool hasHitAnEnemy = false;
+    private bool isTargetDead = false;
 
-    public GameObject enemy;
-
-    public BaseBullet(int damage = 50, float speed = 7f, float destroyTime = 3f) 
+    public BaseBullet(int damage, float speed, float destroyTime) 
     {
         this.damage = damage;
         this.speed = speed;
@@ -34,15 +33,19 @@ public class BaseBullet : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // If the initial target died
         if (enemy == null)
         {
-            if (!hasActivated)
+            // Keep moving straight forward
+            if (!isTargetDead)
             {
+                
                 direction = (lastEnemyPos - initialPos).normalized;
-                hasActivated = true;
+                isTargetDead = true;
             }
             transform.position += speed * Time.deltaTime * direction;
         }
+        // Else keep following the target
         else
         {
             lastEnemyPos = enemy.transform.position;
@@ -52,11 +55,13 @@ public class BaseBullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        var gm = collision.gameObject.GetComponent<baseEnemy>();
-        if (collision.gameObject.CompareTag("enemy") && !hitEnemy && (enemy == null || GameObject.ReferenceEquals(enemy, gm.gameObject)))
+        // Check if we have collided with an enemy AND if the bullet has already hit an enemy
+        // AND (if the bullet has no target enemy OR it's the targeted enemy)
+        if (collision.gameObject.CompareTag("enemy") && !hasHitAnEnemy 
+            && (enemy == null || ReferenceEquals(enemy, collision.gameObject)))
         {
-            gm.health -= damage;
-            hitEnemy = true;
+            collision.gameObject.GetComponent<baseEnemy>().dealDamage(damage);
+            hasHitAnEnemy = true;
             Destroy(gameObject);
         }
     }

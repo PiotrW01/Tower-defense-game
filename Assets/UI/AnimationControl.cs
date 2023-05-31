@@ -7,17 +7,18 @@ public class AnimationControl : MonoBehaviour
     public Animator BuyMenuAnimator;
     private string Menu = "IsBuyMenuOpen";
 
-    private void Start()
-    {
-        //BuyMenuAnimator = gameObject.GetComponent<Animator>();
-    }
-
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.M))
         {
-            BuyMenuAnimator.SetBool(Menu, !BuyMenuAnimator.GetBool(Menu));
+            OpenCloseMenu();
         }
     }
+
+    public void OpenCloseMenu()
+    {
+        BuyMenuAnimator.SetBool(Menu, !BuyMenuAnimator.GetBool(Menu));
+    }
+
 }

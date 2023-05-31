@@ -13,16 +13,16 @@ public class BuyMenuButtons : MonoBehaviour
         createTurret = GameObject.Find("GameEvents").GetComponent<CreateTurret>();
     }
 
-    public void buyTurret1()
+    public void BuyTurret1()
     {
         if (createTurret.isPlacing) return;
-        createTurret.createTurret(0);
+        createTurret.CreateTurrett(0);
     }
 
-    public void buyTurret2()
+    public void BuyTurret2()
     {
         if (createTurret.isPlacing) return;
-        createTurret.createTurret(1);
+        createTurret.CreateTurrett(1);
     }
 
 }

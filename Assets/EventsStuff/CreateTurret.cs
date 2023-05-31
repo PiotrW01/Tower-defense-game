@@ -26,49 +26,53 @@ public class CreateTurret : MonoBehaviour
 
         if (isPlacing)
         {
-            holdTurret();
+            HoldTurret();
             if (Input.GetMouseButton(0) && turretTemp.GetComponent<placeDetection>().canPlace)
             {
-                if(placeTurret()) isPlacing = false;
+                PlaceTurret();
             }
         }
     }
 
 
-    private void holdTurret()
+    private void HoldTurret()
     {
         turretTemp.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 9));
     }
 
-    public void createTurret(int id)
+    public void CreateTurrett(int id)
     {
         if (turretTemp != null) return;
-        isPlacing = true;
-        turretTemp = Instantiate(turrets[id],
-            Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)),
-            Quaternion.identity);
-        turretTemp.GetComponent<BaseTurret>().enabled = false;
+        if (Player.CanBuy(turrets[id].GetComponent<BaseTurret>().GetCost()))
+        {
+            isPlacing = true;
+            turretTemp = Instantiate(turrets[id],
+                Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)),
+                Quaternion.identity);
+            turretTemp.GetComponent<BaseTurret>().enabled = false;
+        }
     }
 
-    private bool placeTurret()
+    private void PlaceTurret()
     {
         var t = turretTemp.GetComponent<BaseTurret>();
 
-        if (Player.money < t.getCost()) return false;
-        Player.money -= t.getCost();
+        if (Player.money < t.GetCost()) return;
+        Player.money -= t.GetCost();
 
         t.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
         t.enabled = true;
         t.canClick = true;
-        t.childCircle.gameObject.SetActive(false);
+        t.shadow.gameObject.SetActive(false);
         t.GetAnimations().Play("PlaceAnimation");
+
+        Destroy(turretTemp.GetComponent<placeDetection>());
         turretTemp.GetComponent<SpriteRenderer>().sortingLayerID = 0;
-        turretTemp.transform.GetComponentInChildren<SpriteRenderer>().sortingLayerID = 0;
-        turretTemp.transform.GetChild(1).GetComponentInChildren<SpriteRenderer>().sortingLayerID = 0;
+        turretTemp.transform.Find("lufa holder").GetComponentInChildren<SpriteRenderer>().sortingLayerID = 0;
+        turretTemp.transform.Find("lufa holder").GetComponentInChildren<SpriteRenderer>().sortingOrder = 1;
 
-
+        isPlacing = false;
         turretTemp = null;
-        return true;
     }
 
 }

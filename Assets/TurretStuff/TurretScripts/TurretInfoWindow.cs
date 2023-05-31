@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class TurretInfoWindow : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public bool isMouseOverInfoWindow = false;
+
+
+    private void OnMouseEnter()
     {
-        
+        isMouseOverInfoWindow = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnMouseExit()
     {
-        
+        isMouseOverInfoWindow = false;
     }
+
+
+
 }

@@ -9,4 +9,9 @@ public class Turret2 : BaseTurret
         
     }
 
+    public override void UpgradeTurret()
+    {
+        if(damageMultiplier < 5) damageMultiplier++;
+        base.UpgradeTurret();
+    }
 }
