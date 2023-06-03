@@ -42,7 +42,7 @@ public class CreateTurret : MonoBehaviour
 
     public void CreateTurrett(int id)
     {
-        if (turretTemp != null) return;
+        if (turretTemp != null || !Player.isAlive) return;
         if (Player.CanBuy(turrets[id].GetComponent<BaseTurret>().GetCost()))
         {
             isPlacing = true;
@@ -56,9 +56,7 @@ public class CreateTurret : MonoBehaviour
     private void PlaceTurret()
     {
         var t = turretTemp.GetComponent<BaseTurret>();
-
-        if (Player.money < t.GetCost()) return;
-        Player.money -= t.GetCost();
+        Player.Buy(t.GetCost());
 
         t.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
         t.enabled = true;

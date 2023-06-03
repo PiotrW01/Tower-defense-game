@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class Turret2 : BaseTurret
 {
-    public Turret2() : base(4.0f,2.0f,400)
+    public Turret2() : base(8.0f,3.0f,600, 400)
     {
         
     }
 
-    public override void UpgradeTurret()
+    protected override void CustomUpgrades()
     {
-        if(damageMultiplier < 5) damageMultiplier++;
-        base.UpgradeTurret();
+        damageMultiplier++;
     }
 }

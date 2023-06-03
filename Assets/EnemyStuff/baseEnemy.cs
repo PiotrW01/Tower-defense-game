@@ -17,7 +17,6 @@ public abstract class baseEnemy : MonoBehaviour
         this.damageToPlayer = damageToPlayer;
     }
 
-
     /*    private void OnCollisionEnter2D(Collision2D collision)
         {
             var gm = collision.gameObject.GetComponent<bullet>();
@@ -37,22 +36,10 @@ public abstract class baseEnemy : MonoBehaviour
             }
         }*/
 
-
-    public float GetSpeed()
-    {
-        return this.speed;
-    }
-
     public int GetDamageToPlayer()
     {
         return this.damageToPlayer;
     }
-
-    public int GetHealth()
-    {
-        return health;
-    }
-
     public void DealDamageToEnemy(int dmg)
     {
         health -= dmg;
@@ -61,6 +48,14 @@ public abstract class baseEnemy : MonoBehaviour
             Destroy(gameObject);
             Player.AddMoney(droppedMoney);
         }
+    }
+    public int GetHealth()
+    {
+        return health;
+    }
+    public float GetSpeed()
+    {
+        return this.speed;
     }
 
 }

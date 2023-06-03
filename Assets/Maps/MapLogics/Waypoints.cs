@@ -6,7 +6,7 @@ using UnityEngine;
 public class Waypoints : MonoBehaviour
 {
     public static Transform[] waypoints;
-    public static float maxDistance = 0f;
+    //public static float maxDistance = 0f;
     public static Vector3 StartPos;
 
     void Awake()
@@ -18,11 +18,11 @@ public class Waypoints : MonoBehaviour
             waypoints[i] = transform.GetChild(i);
         }
 
-        for (int i = 0; i < waypoints.Length-1; i++)
+/*        for (int i = 0; i < waypoints.Length-1; i++)
         {
-            maxDistance += Vector2.Distance(waypoints[i].transform.localPosition, waypoints[i + 1].transform.localPosition);
-        }
+            //maxDistance += Vector2.Distance(waypoints[i].transform.localPosition, waypoints[i + 1].transform.localPosition);
+        }*/
 
-        StartPos = waypoints[0].localPosition;
+        StartPos = waypoints[0].position;
     }
 }

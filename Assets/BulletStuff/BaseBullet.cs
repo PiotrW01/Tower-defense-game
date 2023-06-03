@@ -60,7 +60,7 @@ public class BaseBullet : MonoBehaviour
         if (collision.gameObject.CompareTag("enemy") && !hasHitAnEnemy 
             && (enemy == null || ReferenceEquals(enemy, collision.gameObject)))
         {
-            collision.gameObject.GetComponent<baseEnemy>().dealDamage(damage);
+            collision.gameObject.GetComponent<baseEnemy>().DealDamageToEnemy(damage);
             hasHitAnEnemy = true;
             Destroy(gameObject);
         }

@@ -136,11 +136,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0caf3eaf744762a46964004670a1918e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shadow: {fileID: 0}
   bullet: {fileID: 8808623613652326010, guid: 45d72a073fbc6c649a6e5068b35d2801, type: 3}
-  childCircle: {fileID: 0}
   isOnCooldown: 0
   canClick: 0
-  showAttackRadius: 0
 --- !u!61 &7819293520573720394
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -244,8 +243,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7819293521132207700}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.736, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 1.11, z: 0}
+  m_LocalScale: {x: 1.4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7819293520033382813}

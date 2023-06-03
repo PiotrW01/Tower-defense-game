@@ -18,7 +18,7 @@ public class enemyMovement : MonoBehaviour
     {
         speed = gameObject.GetComponent<baseEnemy>().GetSpeed();
         target = Waypoints.waypoints[1]; // Set the target to the first waypoint
-        distance = Vector2.Distance(gameObject.transform.localPosition, target.transform.localPosition);
+        distance = Vector2.Distance(gameObject.transform.position, target.transform.position);
         //Vector2 direction = target.position - transform.position;
         //toWaypointDistance = distance;
         //targetZ = transform.eulerAngles.z;
@@ -30,7 +30,7 @@ public class enemyMovement : MonoBehaviour
         // Move the enemy towards the target waypoint
         transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
         // Calculate the remaining distance between enemy and target waypoint
-        distance = Vector2.Distance(gameObject.transform.localPosition, target.transform.localPosition);
+        distance = Vector2.Distance(gameObject.transform.position, target.transform.position);
 
         // If the enemy has reached the target waypoint, set the next target waypoint
         if (Vector2.Distance(transform.position, target.position) < 0.001f)

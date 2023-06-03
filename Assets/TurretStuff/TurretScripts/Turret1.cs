@@ -5,11 +5,10 @@ using UnityEngine;
 public class Turret1 : BaseTurret
 {
 
-    public Turret1() : base() { }
+    public Turret1() : base(2f, 1f, 180, 200) { }
 
-    public override void UpgradeTurret()
+    protected override void CustomUpgrades()
     {
-        if (cooldownTime >= 0.2f) cooldownTime -= 0.1f;
-        base.UpgradeTurret();
+        cooldownTime -= 0.1f;
     }
 }

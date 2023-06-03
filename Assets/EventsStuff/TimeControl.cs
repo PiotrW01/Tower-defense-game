@@ -27,6 +27,7 @@ public class TimeControl : MonoBehaviour
         textMeshes[gameSpeed].color = Color.white;
         textMeshes[0].color = new Color(1f, 1f, 0f);
         gameSpeed = 0;
+        Time.timeScale = gameSpeeds[gameSpeed];
     }
 
     void Update()

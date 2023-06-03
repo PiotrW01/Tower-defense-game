@@ -2,23 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class BaseTurret : MonoBehaviour
+public abstract class BaseTurret : MonoBehaviour
 {
     [HideInInspector]
     public Transform shadow;
     public GameObject bullet;
-
     public bool isOnCooldown = false;
     public bool canClick = false;
 
     protected int damageMultiplier = 1;
     protected float attackRadius = 2f;
     protected float cooldownTime = 0.6f;
+    protected int upgradeCost;
+    public int currentLevel = 1;
+    protected int maxUpgradeLevel = 3;
+
     private bool showInfoWindow = false;
     private readonly int cost = 20;
     private float currentTime = 0f;
-
     private readonly List<enemyMovement> enemyDistanceList = new();
     private float offset;
     private GameObject infoWindow;
@@ -27,11 +30,12 @@ public class BaseTurret : MonoBehaviour
     private Transform lufa;
     private Animation anim;
 
-    public BaseTurret(float attackRadius = 2f, float cooldownTime = 1.0f, int cost = 180)
+    public BaseTurret(float attackRadius, float cooldownTime, int cost, int upgradeCost)
     {
         this.attackRadius = attackRadius;
         this.cooldownTime = cooldownTime;
         this.cost = cost;
+        this.upgradeCost = upgradeCost;
     }
     private void Awake()
     {
@@ -66,15 +70,6 @@ public class BaseTurret : MonoBehaviour
                 FireBullet(closestEnemy);
             }
         }
-    }
-    private void RotateToEnemy()
-    {
-
-        lufa.transform.up = closestEnemy.position - lufa.position;
-
-/*        Vector2 direction = closestEnemy.position - lufa.position;
-        float targetZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-        lufa.rotation = Quaternion.Euler(0f, 0f, targetZ);*/
     }
     private void OnMouseOver()
     {
@@ -117,42 +112,6 @@ public class BaseTurret : MonoBehaviour
             CancelInvoke(nameof(HideInfo));
         }
     }
-    private void UpdateInfo()
-    {
-        var details = infoWindow.GetComponentsInChildren<TextMeshProUGUI>();
-        details[0].text = "Damage: " + bullet.GetComponent<BaseBullet>().damage * damageMultiplier;
-        details[1].text = "Cooldown: " + cooldownTime.ToString("0.0") + "s";
-        details[2].text = "Attack range: " + attackRadius;
-    }
-    public void ShowInfo()
-    {
-        shadow.gameObject.SetActive(true);
-        infoWindow.SetActive(true);
-        anim.Play("InfoAnimation");
-    }
-    public void HideInfo()
-    {
-        if (anim.IsPlaying("InfoAnimationHide")) return;
-        StartCoroutine(DisableInfoWindow());
-        offset = anim["InfoAnimation"].length - anim["InfoAnimation"].time;
-        anim.Stop("InfoAnimation");
-        if (offset > anim["InfoAnimation"].length - 0.01f) offset = 0;
-        anim["InfoAnimationHide"].time = offset;
-        anim.Play("InfoAnimationHide");
-        shadow.gameObject.SetActive(false);
-    }
-    private void FireBullet(Transform target)
-    {
-        
-        if (target == null) return;
-        RotateToEnemy();
-
-        GameObject tempBullet = Instantiate(bullet, gameObject.transform.position, Quaternion.identity);
-        tempBullet.GetComponent<BaseBullet>().damage *= damageMultiplier;
-        tempBullet.GetComponent<BaseBullet>().enemy = target.gameObject;
-        
-        isOnCooldown = true;
-    }
     private Transform FindClosestEnemy(Collider2D[] enemiesInRange)
     {
         foreach (var enemy in enemiesInRange)
@@ -188,15 +147,75 @@ public class BaseTurret : MonoBehaviour
         }
         return null;
     }
-    public virtual void UpgradeTurret()
+    private void FireBullet(Transform target)
     {
-        UpdateInfo();
+        
+        if (target == null) return;
+        RotateToEnemy();
+
+        GameObject tempBullet = Instantiate(bullet, gameObject.transform.position, Quaternion.identity);
+        tempBullet.GetComponent<BaseBullet>().damage *= damageMultiplier;
+        tempBullet.GetComponent<BaseBullet>().enemy = target.gameObject;
+        
+        isOnCooldown = true;
+    }
+    private void RotateToEnemy()
+    {
+
+        lufa.transform.up = closestEnemy.position - lufa.position;
+
+/*        Vector2 direction = closestEnemy.position - lufa.position;
+        float targetZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+        lufa.rotation = Quaternion.Euler(0f, 0f, targetZ);*/
+    }
+    private void UpdateInfo()
+    {
+        var details = infoWindow.GetComponentsInChildren<TextMeshProUGUI>();
+        details[0].text = "Damage: " + bullet.GetComponent<BaseBullet>().damage * damageMultiplier;
+        details[1].text = "Cooldown: " + cooldownTime.ToString("0.0") + "s";
+        details[2].text = "Attack range: " + attackRadius;
+    }
+    public void ShowInfo()
+    {
+        shadow.gameObject.SetActive(true);
+        infoWindow.SetActive(true);
+        anim.Play("InfoAnimation");
+    }
+    public void HideInfo()
+    {
+        if (anim.IsPlaying("InfoAnimationHide")) return;
+        StartCoroutine(DisableInfoWindow());
+        offset = anim["InfoAnimation"].length - anim["InfoAnimation"].time;
+        anim.Stop("InfoAnimation");
+        if (offset > anim["InfoAnimation"].length - 0.01f) offset = 0;
+        anim["InfoAnimationHide"].time = offset;
+        anim.Play("InfoAnimationHide");
+        shadow.gameObject.SetActive(false);
     }
     private IEnumerator DisableInfoWindow()
     {
         yield return new WaitForSeconds(anim["InfoAnimationHide"].length);
         if(!showInfoWindow) infoWindow.SetActive(false);
     }
+    private bool CanUpgrade()
+    {
+        if (Player.CanBuy(upgradeCost) && currentLevel < maxUpgradeLevel)
+        {
+            currentLevel++;
+            return true;
+        } return false;
+    }
+    private void UpgradeTurret()
+    {
+        if (CanUpgrade())
+        {
+            Player.Buy(upgradeCost);
+            upgradeCost *= 2;
+            CustomUpgrades();
+            UpdateInfo();
+        }
+    }
+    protected abstract void CustomUpgrades();
     public int GetCost()
     {
         return cost;
