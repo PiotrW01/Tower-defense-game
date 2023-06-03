@@ -70,11 +70,11 @@ public class spawnEnemy : MonoBehaviour
 
         while (currentWaveInWave < wavesInWave)
         {
-            for (int i = 0; i < v[currentWaveInWave, 1]; i++) // 1 is array with enemy amount
+            for (int i = 0; i < v[currentWaveInWave, 1]; i++) // 1 Amount
             {
-                Instantiate(enemies[v[currentWaveInWave, 0]], Waypoints.StartPos, Quaternion.identity); // 0 is array with enemy types
+                Instantiate(enemies[v[currentWaveInWave, 0]], Waypoints.StartPos, Quaternion.identity); // 0 Type
 
-                yield return new WaitForSeconds((float)v[currentWaveInWave, 2] / 1000); // 2 is array with spawn delay
+                yield return new WaitForSeconds((float)v[currentWaveInWave, 2] / 1000); // 2 Delay [ms]
             }
 
             currentWaveInWave++;
