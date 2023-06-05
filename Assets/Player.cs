@@ -19,12 +19,12 @@ public class Player : MonoBehaviour
     {
         moneyText = GameObject.Find("MoneyText").GetComponent<TextMeshProUGUI>();
         healthText = GameObject.Find("HealthText").GetComponent<TextMeshProUGUI>();
-        GameObject.Find("UserInterface").transform.Find("MenuInterface").gameObject.SetActive(false);
+        GameObject.Find("UserInterface").transform.Find("GameOverInterface").gameObject.SetActive(false);
 
 
         isAlive = true;
         totalKills = 0;
-        health = 1;
+        health = 100;
         totalMoneySpent = 0;
         money = 5000;
 

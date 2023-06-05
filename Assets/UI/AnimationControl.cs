@@ -18,6 +18,7 @@ public class AnimationControl : MonoBehaviour
 
     public void OpenCloseMenu()
     {
+        SoundManager.Instance.PlayButtonClick();
         BuyMenuAnimator.SetBool(Menu, !BuyMenuAnimator.GetBool(Menu));
     }
 

@@ -17,9 +17,23 @@ public class LevelButtons : MonoBehaviour
         
     }
 
-    public void restartLevel()
+    public void RestartLevel()
     {
+        SoundManager.Instance.PlayButtonClick();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void GoToMenu()
+    {
+        SoundManager.Instance.PlayButtonClick();
+    }
+
+    public void ResumeGame()
+    {
+        SoundManager.Instance.PlayButtonClick();
+        Time.timeScale = TimeControl.gameSpeeds[TimeControl.gameSpeed];
+        TimeControl.gamePaused = false;
+        GameObject.Find("OptionsInterface").gameObject.SetActive(false);
     }
 
 }

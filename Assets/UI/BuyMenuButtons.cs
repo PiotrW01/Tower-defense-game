@@ -15,14 +15,22 @@ public class BuyMenuButtons : MonoBehaviour
 
     public void BuyTurret1()
     {
-        if (createTurret.isPlacing) return;
+        if (CreateTurret.isPlacing) return;
+        SoundManager.Instance.PlayTurretPickPlace();
         createTurret.CreateTurrett(0);
     }
 
     public void BuyTurret2()
     {
-        if (createTurret.isPlacing) return;
+        if (CreateTurret.isPlacing) return;
+        SoundManager.Instance.PlayTurretPickPlace();
         createTurret.CreateTurrett(1);
     }
 
+    public void BuyTurret3()
+    {
+        if (CreateTurret.isPlacing) return;
+        SoundManager.Instance.PlayTurretPickPlace();
+        createTurret.CreateTurrett(2);
+    }
 }
