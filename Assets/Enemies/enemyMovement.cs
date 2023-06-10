@@ -22,10 +22,6 @@ public class enemyMovement : MonoBehaviour
         transform.Rotate(new Vector3(0, 90, 0));
 
         distance = Vector2.Distance(gameObject.transform.position, target.transform.position);
-        //Vector2 direction = target.position - transform.position;
-        //toWaypointDistance = distance;
-        //targetZ = transform.eulerAngles.z;
-        //transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
     }
 
     private void FixedUpdate()
@@ -53,7 +49,6 @@ public class enemyMovement : MonoBehaviour
         if (waypointIndex < Waypoints.waypoints.Length)
         {
             target = Waypoints.waypoints[waypointIndex];
-            //toWaypointDistance = Vector2.Distance(gameObject.transform.localPosition, target.transform.localPosition);
         }
         else
         {
