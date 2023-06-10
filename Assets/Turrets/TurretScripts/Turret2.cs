@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Turret2 : BaseTurret
 {
-    public Turret2() : base(8.0f,3.0f,600, 400)
+    public Turret2() : base(8.0f,1.6f, 350, 400)
     {
         
     }

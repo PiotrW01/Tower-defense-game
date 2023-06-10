@@ -18,6 +18,9 @@ public class enemyMovement : MonoBehaviour
     {
         speed = gameObject.GetComponent<baseEnemy>().GetSpeed();
         target = Waypoints.waypoints[1]; // Set the target to the first waypoint
+        transform.LookAt(target.position);
+        transform.Rotate(new Vector3(0, 90, 0));
+
         distance = Vector2.Distance(gameObject.transform.position, target.transform.position);
         //Vector2 direction = target.position - transform.position;
         //toWaypointDistance = distance;
@@ -38,12 +41,8 @@ public class enemyMovement : MonoBehaviour
             SetNextTarget();
         }
 
-        // If the direction is not zero, rotate 
-        /*        Vector2 direction = target.position - transform.position;
-                if (direction != Vector2.zero)
-                {
-                    rotateToTarget(direction);
-                }*/
+        Vector2 targetDirection = target.position - transform.position;
+        RotateToTarget(targetDirection);
 
 
     }
@@ -66,13 +65,8 @@ public class enemyMovement : MonoBehaviour
 
     private void RotateToTarget(Vector2 direction)
     {
-        /*        Vector3 direction = target.position - transform.position;
-                Quaternion rotation = Quaternion.LookRotation(direction);
-                float angle = rotation.eulerAngles.y;
-                Debug.Log("Angle: " + angle);*/
-        //Mathf.Rad2Deg - 90f
         targetZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Quaternion targetRotation = Quaternion.Euler(0f, 0f, targetZ);
+        Quaternion targetRotation = Quaternion.Euler(0f, 0f, targetZ + 90);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
     }
 }

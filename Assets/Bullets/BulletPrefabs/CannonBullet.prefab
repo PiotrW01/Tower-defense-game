@@ -115,7 +115,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletFire: {fileID: 8300000, guid: af66162561d2eed40ad49268cab318bb, type: 3}
-  bulletHit: {fileID: 8300000, guid: af66162561d2eed40ad49268cab318bb, type: 3}
   enemy: {fileID: 0}
-  damage: 150
+  damage: 1
   explosion: {fileID: 5490689566234634137, guid: 111b25776bfbcd2409f28a124a093903, type: 3}

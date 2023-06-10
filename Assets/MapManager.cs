@@ -8,11 +8,16 @@ public class MapManager : MonoBehaviour
     public static int ChosenMap = 0;
     public GameObject[] maps;
 
-    private void Awake()
+    private void Start()
     {
-        if (SceneManager.GetActiveScene().name.Equals("game"))
+        SceneManager.activeSceneChanged += ChangedActiveScene;
+    }
+
+    private void ChangedActiveScene(Scene current, Scene next)
+    {
+        if (next.name.Equals("game"))
         {
-            Instantiate(maps[ChosenMap], new Vector3(0,0,0), Quaternion.identity);
+            Instantiate(maps[ChosenMap], new Vector3(0, 0, 0), Quaternion.identity);
         }
     }
 }

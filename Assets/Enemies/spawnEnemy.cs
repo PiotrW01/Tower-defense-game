@@ -1,12 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using TMPro;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class spawnEnemy : MonoBehaviour
 {
+    public static int enemiesAlive = 0;
     public int waveNumber = 0;
     public bool isSpawning = false;
     public GameObject[] enemies;
@@ -41,11 +39,10 @@ public class spawnEnemy : MonoBehaviour
 
         CreateWave(0,
             new int[,] {{(int)Enemy.Enemy1, 10, 1000 },
-                        {(int)Enemy.Enemy1, 10, 500 }, 
-                        {(int)Enemy.Enemy2, 2, 1000 }});
+                        {(int)Enemy.Enemy1, 15, 500 }});
         CreateWave(1,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
+            new int[,] {{(int)Enemy.Enemy2, 5, 500 },
+                        {(int)Enemy.Enemy3, 5, 250 } });
         CreateWave(2,
             new int[,] {{(int)Enemy.Enemy3, 5, 500 },
                         {(int)Enemy.Enemy4, 5, 250 } });
@@ -111,7 +108,7 @@ public class spawnEnemy : MonoBehaviour
     }
     public void SpawnWave() 
     {
-        if (enemyWaves[waveNumber] == null || isSpawning) return;
+        if (enemyWaves[waveNumber] == null || isSpawning || enemiesAlive != 0) return;
         SoundManager.Instance.PlayButtonClick();
         waveNumberText.text = "Wave " + (waveNumber + 1).ToString();
         StartCoroutine(SpawnEnemies(waveNumber++));
@@ -128,6 +125,7 @@ public class spawnEnemy : MonoBehaviour
             for (int i = 0; i < v[currentWaveInWave, 1]; i++) // 1 Amount
             {
                 Instantiate(enemies[v[currentWaveInWave, 0]], Waypoints.StartPos, Quaternion.identity); // 0 Type
+                enemiesAlive++;
 
                 yield return new WaitForSeconds((float)v[currentWaveInWave, 2] / 1000); // 2 Delay [ms]
             }

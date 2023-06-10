@@ -116,4 +116,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletFire: {fileID: 8300000, guid: d9419ba0bfac1e84a95418ac5851caf6, type: 3}
   enemy: {fileID: 0}
-  damage: 50
+  damage: 1

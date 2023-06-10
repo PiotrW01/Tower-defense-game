@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 using System.Linq;
 
 public class BezierCurveGenerator : MonoBehaviour
@@ -61,8 +61,7 @@ public class BezierCurveGenerator : MonoBehaviour
         {
             Vector2 point = CalculateBezierPoint(t, points);
             GameObject circle = Instantiate(circlePrefab, point, Quaternion.identity);
-            var sv = SceneVisibilityManager.instance;
-            sv.DisablePicking(circle, false);
+            //SceneVisibilityManager.instance.DisablePicking(circle, false);
             circles.Add(circle);
         }
     }

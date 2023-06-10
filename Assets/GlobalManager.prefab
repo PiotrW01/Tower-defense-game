@@ -79,6 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maps:
   - {fileID: 7760685458207544086, guid: 6404207d2d8c6024d99caa1411098b83, type: 3}
+  - {fileID: 7760685458207544086, guid: 7c48593dae171dc4ba1ca5fd60230825, type: 3}
 --- !u!1 &318200645682921547
 GameObject:
   m_ObjectHideFlags: 0

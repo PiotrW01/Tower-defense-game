@@ -50,6 +50,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: xd
+    uniqueID: 2428656167
+    locked: 0
   - name: UI
     uniqueID: 248722459
     locked: 0

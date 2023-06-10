@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public static bool isAlive;
     public static int totalKills;
     public static int totalMoneySpent;
+    public static int totalWaves;
 
     private static TextMeshProUGUI moneyText;
     private static TextMeshProUGUI healthText;
@@ -23,6 +24,7 @@ public class Player : MonoBehaviour
 
 
         isAlive = true;
+        totalWaves = 0;
         totalKills = 0;
         health = 100;
         totalMoneySpent = 0;
@@ -39,7 +41,7 @@ public class Player : MonoBehaviour
         isAlive = false;
         GameObject.Find("GameEvents").SetActive(false);
         GameObject.Find("BuyMenu").GetComponent<BuyMenuButtons>().enabled = false;
-        GameObject.Find("UserInterface").transform.Find("MenuInterface").gameObject.SetActive(true);
+        GameObject.Find("UserInterface").transform.Find("GameOverInterface").gameObject.SetActive(true);
     }
 
     public static void DamagePlayer(int damage)

@@ -59,4 +59,12 @@ public abstract class baseEnemy : MonoBehaviour
         return this.speed;
     }
 
+    private void OnDestroy()
+    {
+        if (--spawnEnemy.enemiesAlive == 0)
+        {
+            Player.totalWaves++;
+        }
+    }
+
 }

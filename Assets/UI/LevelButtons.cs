@@ -26,6 +26,7 @@ public class LevelButtons : MonoBehaviour
     public void GoToMenu()
     {
         SoundManager.Instance.PlayButtonClick();
+        SceneManager.LoadScene("menu");
     }
 
     public void ResumeGame()

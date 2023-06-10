@@ -9,7 +9,7 @@ public class CannonBullet : BaseBullet
     public GameObject explosion;
 
 
-    public CannonBullet() : base(150, 10f, 3f) 
+    public CannonBullet() : base(1, 10f, 1f) 
     {
         
     }

@@ -5,6 +5,6 @@ using UnityEngine;
 
 public class enemy2 : baseEnemy
 {
-    public enemy2() : base(50, 1f, 1, 5) { }
+    public enemy2() : base(2, 2.8f, 2, 2) { }
 
 }
