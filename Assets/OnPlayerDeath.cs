@@ -9,7 +9,6 @@ public class OnPlayerDeath : MonoBehaviour
     public TextMeshProUGUI totalMoney;
     public TextMeshProUGUI totalWaves;
 
-    // Start is called before the first frame update
     private void OnEnable()
     {
         totalKills.text = "Total kills: " + Player.totalKills.ToString();

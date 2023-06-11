@@ -15,6 +15,11 @@ public class MainMenuButtons : MonoBehaviour
     public void QuitGame()
     {
         SoundManager.Instance.PlayButtonClick();
+
+        PlayerPrefs.SetFloat("Volume", SoundManager.Instance.GetSoundVolume());
+        PlayerPrefs.SetFloat("Music", SoundManager.Instance.GetMusicVolume());
+        PlayerPrefs.Save();
+
         Application.Quit();
     }
 }

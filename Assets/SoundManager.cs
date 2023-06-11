@@ -19,6 +19,9 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
+        SetSoundVolume(PlayerPrefs.GetFloat("Sound", 0.5f));
+        SetMusicVolume(PlayerPrefs.GetFloat("Music", 0.5f));
+
         if(Instance == null)
         {
             Instance = this;

@@ -20,7 +20,7 @@ public abstract class BaseTurret : MonoBehaviour
     public int currentLevel = 0;
     protected int maxUpgradeLevel = 3;
 
-    private bool infoOnTop;
+    //private bool infoOnTop;
     private bool showInfoWindow = false;
     private readonly int cost = 20;
     private float currentTime = 0f;
@@ -46,11 +46,11 @@ public abstract class BaseTurret : MonoBehaviour
         infoWindow = transform.Find("InfoWindow").gameObject;
         infoWindow.transform.Find("Canvas").GetComponent<Canvas>().worldCamera = Camera.main;
         infoWindow.SetActive(false);
-        if (Camera.main.WorldToViewportPoint(transform.position).y > 0.8f)
+/*        if (Camera.main.WorldToViewportPoint(transform.position).y > 0.8f)
         {
             infoOnTop = false;
         }
-        else infoOnTop = true;
+        else infoOnTop = true;*/
 
 
         shadow = transform.Find("shadow");
