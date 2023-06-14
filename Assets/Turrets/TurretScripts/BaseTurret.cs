@@ -17,8 +17,11 @@ public abstract class BaseTurret : MonoBehaviour
     protected float attackRadius;
     protected float cooldownTime;
     protected int upgradeCost;
+    public TextMeshProUGUI upgradeCostText;
+    public bool[] upgradeable; // dmg, cooldown, radius
+    public int maxUpgradeLevel = 3;
     public int currentLevel = 0;
-    protected int maxUpgradeLevel = 3;
+
 
     //private bool infoOnTop;
     private bool showInfoWindow = false;
@@ -32,12 +35,13 @@ public abstract class BaseTurret : MonoBehaviour
     private Transform lufa;
     private Animation anim;
 
-    public BaseTurret(float attackRadius, float cooldownTime, int cost, int upgradeCost)
+    public BaseTurret(float attackRadius, float cooldownTime, int cost, int upgradeCost, bool[] upgradeable)
     {
         this.attackRadius = attackRadius;
         this.cooldownTime = cooldownTime;
         this.cost = cost;
         this.upgradeCost = upgradeCost;
+        this.upgradeable = upgradeable;
     }
     private void Awake()
     {
@@ -51,7 +55,6 @@ public abstract class BaseTurret : MonoBehaviour
             infoOnTop = false;
         }
         else infoOnTop = true;*/
-
 
         shadow = transform.Find("shadow");
         shadow.localScale = new Vector2(attackRadius * 2f, attackRadius * 2f);
@@ -82,12 +85,6 @@ public abstract class BaseTurret : MonoBehaviour
     private void OnMouseOver()
     {
         if (!canClick) return;
-/*        if(Input.GetMouseButtonDown(0))
-        {
-            showAttackRadius = !showAttackRadius;
-            if (showAttackRadius) shadow.gameObject.SetActive(true);
-            else shadow.gameObject.SetActive(false);
-        }*/
         if (Input.GetMouseButtonDown(1))
         {
             if (anim.IsPlaying("PlaceAnimation")) return;
@@ -180,8 +177,9 @@ public abstract class BaseTurret : MonoBehaviour
     {
         var details = infoWindow.GetComponentsInChildren<TextMeshProUGUI>();
         details[0].text = "Damage: " + bullet.GetComponent<BaseBullet>().damage * damageMultiplier;
-        details[1].text = "Cooldown: " + cooldownTime.ToString("0.0") + "s";
+        details[1].text = "Cooldown: " + cooldownTime.ToString("0.00") + "s";
         details[2].text = "Attack range: " + attackRadius + "m";
+        upgradeCostText.text = upgradeCost + "$";
     }
     public void ShowInfo()
     {
@@ -212,7 +210,6 @@ public abstract class BaseTurret : MonoBehaviour
     {
         if (Player.CanBuy(upgradeCost) && currentLevel <= maxUpgradeLevel)
         {
-            currentLevel++;
             return true;
         } return false;
     }
@@ -220,11 +217,18 @@ public abstract class BaseTurret : MonoBehaviour
     {
         if (CanUpgrade())
         {
+            currentLevel++;
             Player.Buy(upgradeCost);
             upgradeCost = (int)(upgradeCost * 1.5f);
             CustomUpgrades();
             UpdateInfo();
         }
+    }
+
+    public void RemoveTurret()
+    {
+        Destroy(gameObject);
+        Player.AddMoney(100);
     }
     protected abstract void CustomUpgrades();
     public int GetCost()

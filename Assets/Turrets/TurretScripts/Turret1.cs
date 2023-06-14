@@ -5,7 +5,7 @@ using UnityEngine;
 public class Turret1 : BaseTurret
 {
 
-    public Turret1() : base(2f, 0.95f, 200, 200) { }
+    public Turret1() : base(3.5f, 0.95f, 180, 100, new bool[] { false, true, false }) { }
 
     protected override void CustomUpgrades()
     {

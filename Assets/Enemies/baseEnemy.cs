@@ -64,6 +64,7 @@ public abstract class baseEnemy : MonoBehaviour
         if (--spawnEnemy.enemiesAlive == 0)
         {
             Player.totalWaves++;
+            if (Player.totalWaves == 10) Player.GameOver();
         }
     }
 

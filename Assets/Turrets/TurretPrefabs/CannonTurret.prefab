@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 550492743
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: bea013a94257c094c96ff2b52c368caf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -114,7 +114,7 @@ Transform:
   m_Children:
   - {fileID: 7819293521132207703}
   m_Father: {fileID: 7819293520573720392}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7819293520573720439
 GameObject:
@@ -151,8 +151,8 @@ Transform:
   m_Children:
   - {fileID: 512468255130935203}
   - {fileID: 5752000560904969248}
+  - {fileID: 8847635790355080776}
   - {fileID: 7819293520033382813}
-  - {fileID: 137033255537322163}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -191,6 +191,9 @@ MonoBehaviour:
   bullet: {fileID: 8808623613652326010, guid: 38604a7a68f4495448fd39f80c7e0cfb, type: 3}
   isOnCooldown: 0
   canClick: 0
+  upgradeCostText: {fileID: 4870794117307719050}
+  upgradeable: 010101
+  maxUpgradeLevel: 3
   currentLevel: 1
 --- !u!114 &2995882802169356026
 MonoBehaviour:
@@ -323,7 +326,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 550492743
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 459ed320ccd02ce49bdf651ffa14f211, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -350,6 +353,18 @@ PrefabInstance:
     - target: {fileID: 2126405405395881105, guid: 1194faa03c4240844a811860398c821c, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2289216013124425575, guid: 1194faa03c4240844a811860398c821c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: -7512248411883276085}
+    - target: {fileID: 2289216013124425575, guid: 1194faa03c4240844a811860398c821c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RemoveTurret
+      objectReference: {fileID: 0}
+    - target: {fileID: 3162544074194563263, guid: 1194faa03c4240844a811860398c821c, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5822124963048472132, guid: 1194faa03c4240844a811860398c821c, type: 3}
       propertyPath: m_RootOrder
@@ -405,7 +420,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6454958458934552966, guid: 1194faa03c4240844a811860398c821c, type: 3}
       propertyPath: m_SortingLayer
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6454958458934552966, guid: 1194faa03c4240844a811860398c821c, type: 3}
       propertyPath: m_SortingOrder
@@ -425,9 +440,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1194faa03c4240844a811860398c821c, type: 3}
---- !u!4 &137033255537322163 stripped
+--- !u!114 &4870794117307719050 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1347149937082092413, guid: 1194faa03c4240844a811860398c821c, type: 3}
+  m_PrefabInstance: {fileID: 5848628677654845175}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &8847635790355080776 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5822124963048472132, guid: 1194faa03c4240844a811860398c821c, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3162544074194563263, guid: 1194faa03c4240844a811860398c821c, type: 3}
   m_PrefabInstance: {fileID: 5848628677654845175}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7819293520363159437

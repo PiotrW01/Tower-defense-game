@@ -17,7 +17,13 @@ public class MapManager : MonoBehaviour
     {
         if (next.name.Equals("game"))
         {
-            Instantiate(maps[ChosenMap], new Vector3(0, 0, 0), Quaternion.identity);
+            try
+            {
+                Instantiate(maps[ChosenMap], new Vector3(0, 0, 0), Quaternion.identity);
+            } catch
+            {
+                Instantiate(maps[0], new Vector3(0, 0, 0), Quaternion.identity);
+            }
         }
     }
 }

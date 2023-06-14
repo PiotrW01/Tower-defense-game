@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 550492743
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: cf01a8ccd95086e4694dcac9b9680b15, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -114,7 +114,7 @@ Transform:
   m_Children:
   - {fileID: 7819293521132207703}
   m_Father: {fileID: 7819293520573720392}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7819293520573720439
 GameObject:
@@ -151,8 +151,8 @@ Transform:
   m_Children:
   - {fileID: 1710945202108993124}
   - {fileID: 5752000560904969248}
+  - {fileID: 3971865474826032268}
   - {fileID: 7819293520033382813}
-  - {fileID: 5490218082556631671}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -172,6 +172,9 @@ MonoBehaviour:
   bullet: {fileID: 8808623613652326010, guid: 45d72a073fbc6c649a6e5068b35d2801, type: 3}
   isOnCooldown: 0
   canClick: 0
+  upgradeCostText: {fileID: 1031168414077497166}
+  upgradeable: 010100
+  maxUpgradeLevel: 3
   currentLevel: 1
 --- !u!61 &7819293520573720394
 BoxCollider2D:
@@ -322,7 +325,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 550492743
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 459ed320ccd02ce49bdf651ffa14f211, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -349,6 +352,18 @@ PrefabInstance:
     - target: {fileID: 2126405405395881105, guid: 1194faa03c4240844a811860398c821c, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2289216013124425575, guid: 1194faa03c4240844a811860398c821c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7819293520573720395}
+    - target: {fileID: 2289216013124425575, guid: 1194faa03c4240844a811860398c821c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RemoveTurret
+      objectReference: {fileID: 0}
+    - target: {fileID: 3162544074194563263, guid: 1194faa03c4240844a811860398c821c, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5822124963048472132, guid: 1194faa03c4240844a811860398c821c, type: 3}
       propertyPath: m_RootOrder
@@ -412,9 +427,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1194faa03c4240844a811860398c821c, type: 3}
---- !u!4 &5490218082556631671 stripped
+--- !u!114 &1031168414077497166 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1347149937082092413, guid: 1194faa03c4240844a811860398c821c, type: 3}
+  m_PrefabInstance: {fileID: 2088961657929131059}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &3971865474826032268 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5822124963048472132, guid: 1194faa03c4240844a811860398c821c, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3162544074194563263, guid: 1194faa03c4240844a811860398c821c, type: 3}
   m_PrefabInstance: {fileID: 2088961657929131059}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7819293520363159437

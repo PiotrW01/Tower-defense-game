@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Turret2 : BaseTurret
 {
-    public Turret2() : base(8.0f,1.6f, 350, 400)
+    public Turret2() : base(10.0f,1.6f, 350, 200, new bool[] { true, true, false })
     {
         
     }
@@ -12,5 +12,6 @@ public class Turret2 : BaseTurret
     protected override void CustomUpgrades()
     {
         damageMultiplier += 0.3f;
+        cooldownTime -= 0.2f;
     }
 }

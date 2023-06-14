@@ -5,6 +5,7 @@ using UnityEngine;
 public class spawnEnemy : MonoBehaviour
 {
     public static int enemiesAlive = 0;
+
     public int waveNumber = 0;
     public bool isSpawning = false;
     public GameObject[] enemies;
@@ -38,65 +39,52 @@ public class spawnEnemy : MonoBehaviour
         // enemySpawnDelay is in miliseconds
 
         CreateWave(0,
-            new int[,] {{(int)Enemy.Enemy1, 10, 1000 },
-                        {(int)Enemy.Enemy1, 15, 500 }});
+            new int[,] {
+                {(int)Enemy.Enemy1, 20, 1000 }
+            });
         CreateWave(1,
-            new int[,] {{(int)Enemy.Enemy2, 5, 500 },
-                        {(int)Enemy.Enemy3, 5, 250 } });
+            new int[,] {
+                { (int)Enemy.Enemy1, 35, 400 }
+            });
         CreateWave(2,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
+            new int[,] {
+                {(int)Enemy.Enemy1, 25, 750 },
+                {(int)Enemy.Enemy2, 5, 1000 } 
+            });
         CreateWave(3,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
+            new int[,] {
+                {(int)Enemy.Enemy1, 35, 500 },
+                {(int)Enemy.Enemy2, 18, 500 } 
+            });
         CreateWave(4,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
+            new int[,] {
+                {(int)Enemy.Enemy1, 20, 500 },
+                {(int)Enemy.Enemy2, 5, 500 },
+                {(int)Enemy.Enemy2, 15, 250 }
+            });
         CreateWave(5,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
+            new int[,] {
+                {(int)Enemy.Enemy1, 50, 150 },
+                {(int)Enemy.Enemy4, 5, 500 } 
+            });
         CreateWave(6,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
+            new int[,] {
+                {(int)Enemy.Enemy3, 20, 500 }
+            });
         CreateWave(7,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
+            new int[,] { 
+                { (int)Enemy.Enemy2, 30, 100 }, 
+                { (int)Enemy.Enemy3, 10, 500 }
+            });
         CreateWave(8,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
+            new int[,] {
+                { (int)Enemy.Enemy4, 20, 200 }
+            });
         CreateWave(9,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
-        CreateWave(10,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
-        CreateWave(11,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
-        CreateWave(12,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
-        CreateWave(13,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
-        CreateWave(14,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
-        CreateWave(15,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
-        CreateWave(16,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
-        CreateWave(17,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
-        CreateWave(18,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
-        CreateWave(19,
-            new int[,] {{(int)Enemy.Enemy3, 5, 500 },
-                        {(int)Enemy.Enemy4, 5, 250 } });
+            new int[,] {
+                { (int)Enemy.Enemy4, 20, 200 },
+                { (int)Enemy.Enemy1, 80, 50 }
+            });
 
     }
     private void Update()
