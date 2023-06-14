@@ -57,7 +57,7 @@ public class TimeControl : MonoBehaviour
     }
 
 
-    private void changeTimeSpeed()
+    public void changeTimeSpeed()
     {
         textMeshes[gameSpeed].color = Color.white;
         gameSpeed++;
