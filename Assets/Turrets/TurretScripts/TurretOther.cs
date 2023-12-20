@@ -12,7 +12,6 @@ public class TurretOther : MonoBehaviour
 
     private void Awake()
     {
-        //attackRadius = gameObject.GetComponent<Turret>().attackRadius;
         childCircle = gameObject.transform.Find("shadow");
         childCircle.localScale = new Vector2(attackRadius * 4, attackRadius * 4);
     }

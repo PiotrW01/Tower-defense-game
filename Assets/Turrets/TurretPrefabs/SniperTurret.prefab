@@ -146,7 +146,7 @@ Transform:
   m_GameObject: {fileID: 7819293520573720439}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -2.81, y: 3.21, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1710945202108993124}
@@ -172,6 +172,7 @@ MonoBehaviour:
   bullet: {fileID: 8808623613652326010, guid: 45d72a073fbc6c649a6e5068b35d2801, type: 3}
   isOnCooldown: 0
   canClick: 0
+  attackRadius: 10
   upgradeCostText: {fileID: 1031168414077497166}
   upgradeable: 010100
   maxUpgradeLevel: 3
@@ -456,15 +457,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2544674594184553389, guid: c7a5c8a5a4468ff46a74789e4c7f7c08, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2544674594184553389, guid: c7a5c8a5a4468ff46a74789e4c7f7c08, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2544674594184553389, guid: c7a5c8a5a4468ff46a74789e4c7f7c08, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2544674594184553389, guid: c7a5c8a5a4468ff46a74789e4c7f7c08, type: 3}
       propertyPath: m_LocalPosition.x

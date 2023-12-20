@@ -8,7 +8,7 @@ public class enemyMovement : MonoBehaviour
     private readonly float turnSpeed = 5f;
 
     private float targetZ;
-    private Transform target; // The next point on the path the enemy needs to reach
+    private Vector2 target; // The next point on the path the enemy needs to reach
 
     public int waypointIndex = 1; // The index of the current waypoint in the path
     public float distance;
@@ -18,26 +18,26 @@ public class enemyMovement : MonoBehaviour
     {
         speed = gameObject.GetComponent<baseEnemy>().GetSpeed();
         target = Waypoints.waypoints[1]; // Set the target to the first waypoint
-        transform.LookAt(target.position);
+        transform.LookAt(target);
         transform.Rotate(new Vector3(0, 90, 0));
 
-        distance = Vector2.Distance(gameObject.transform.position, target.transform.position);
+        distance = Vector2.Distance(gameObject.transform.position, target);
     }
 
     private void FixedUpdate()
     {
         // Move the enemy towards the target waypoint
-        transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
         // Calculate the remaining distance between enemy and target waypoint
-        distance = Vector2.Distance(gameObject.transform.position, target.transform.position);
+        distance = Vector2.Distance(gameObject.transform.position, target);
 
         // If the enemy has reached the target waypoint, set the next target waypoint
-        if (Vector2.Distance(transform.position, target.position) < 0.001f)
+        if (Vector2.Distance(transform.position, target) < 0.001f)
         {
             SetNextTarget();
         }
 
-        Vector2 targetDirection = target.position - transform.position;
+        Vector2 targetDirection = new Vector3(target.x,target.y,0) - transform.position;
         RotateToTarget(targetDirection);
 
 

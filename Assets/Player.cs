@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
         healthText = GameObject.Find("HealthText").GetComponent<TextMeshProUGUI>();
         GameObject.Find("UserInterface").transform.Find("GameOverInterface").gameObject.SetActive(false);
 
-        money = 500;
+        money = 99999;
         health = 100;
 
         isAlive = true;

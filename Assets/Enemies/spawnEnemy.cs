@@ -112,7 +112,7 @@ public class spawnEnemy : MonoBehaviour
         {
             for (int i = 0; i < v[currentWaveInWave, 1]; i++) // 1 Amount
             {
-                Instantiate(enemies[v[currentWaveInWave, 0]], Waypoints.StartPos, Quaternion.identity); // 0 Type
+                Instantiate(enemies[v[currentWaveInWave, 0]], Waypoints.waypoints[0], Quaternion.identity); // 0 Type
                 enemiesAlive++;
 
                 yield return new WaitForSeconds((float)v[currentWaveInWave, 2] / 1000); // 2 Delay [ms]

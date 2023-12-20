@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class baseEnemy : MonoBehaviour
 {
     public float health;
-    private readonly float speed;
+    public float speed;
     private readonly int droppedMoney;
     private readonly int damageToPlayer;
 
@@ -17,24 +17,10 @@ public abstract class baseEnemy : MonoBehaviour
         this.damageToPlayer = damageToPlayer;
     }
 
-    /*    private void OnCollisionEnter2D(Collision2D collision)
-        {
-            var gm = collision.gameObject.GetComponent<bullet>();
-            if (collision.gameObject.CompareTag("bullet") && !gm.hitEnemy && (gm.enemy == null || GameObject.ReferenceEquals(gm.enemy, gameObject)))
-            {
-
-                Debug.Log("hit");
-                int damage = gm.damage;
-                health -= damage;
-                if (health <= 0)
-                {
-                    Destroy(gameObject);
-                    Player.money += droppedMoney;
-                }
-                gm.hitEnemy = true;
-                Destroy(collision.gameObject);
-            }
-        }*/
+    private void Start()
+    {
+        speed *= transform.localScale.x;
+    }
 
     public int GetDamageToPlayer()
     {

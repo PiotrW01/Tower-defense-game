@@ -16,7 +16,7 @@ public class MainMenuButtons : MonoBehaviour
     {
         SoundManager.Instance.PlayButtonClick();
 
-        PlayerPrefs.SetFloat("Volume", SoundManager.Instance.GetSoundVolume());
+        PlayerPrefs.SetFloat("Sound", SoundManager.Instance.GetSoundVolume());
         PlayerPrefs.SetFloat("Music", SoundManager.Instance.GetMusicVolume());
         PlayerPrefs.Save();
 

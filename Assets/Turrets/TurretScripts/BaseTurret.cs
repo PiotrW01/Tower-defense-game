@@ -14,7 +14,7 @@ public abstract class BaseTurret : MonoBehaviour
     public bool canClick = false;
 
     protected float damageMultiplier = 1f;
-    protected float attackRadius;
+    public float attackRadius;
     protected float cooldownTime;
     protected int upgradeCost;
     public TextMeshProUGUI upgradeCostText;
@@ -45,19 +45,13 @@ public abstract class BaseTurret : MonoBehaviour
     }
     private void Awake()
     {
+        attackRadius *= transform.localScale.x;
         anim = gameObject.GetComponent<Animation>();
-
         infoWindow = transform.Find("InfoWindow").gameObject;
         infoWindow.transform.Find("Canvas").GetComponent<Canvas>().worldCamera = Camera.main;
         infoWindow.SetActive(false);
-/*        if (Camera.main.WorldToViewportPoint(transform.position).y > 0.8f)
-        {
-            infoOnTop = false;
-        }
-        else infoOnTop = true;*/
-
         shadow = transform.Find("shadow");
-        shadow.localScale = new Vector2(attackRadius * 2f, attackRadius * 2f);
+        shadow.localScale = new Vector2(attackRadius, attackRadius);
         shadow.gameObject.SetActive(true);
 
         lufa = transform.Find("lufa holder");
