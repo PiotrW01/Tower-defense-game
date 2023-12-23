@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -8,24 +7,17 @@ public class TangentPoint : MonoBehaviour
     public SplinePoint splineParent; 
     public Tangent TangentSide;
     private bool isSelected = false;
+    public SpriteShapeController controller;
     private Spline spline;
     private float snapDistance = 0.4f;
 
-    private void Awake()
-    {
-        spline = PathShapeController.controller.spline;
-    }
-
     private void Start()
     {
+        GetComponent<SpriteRenderer>().enabled = true;
+        spline = controller.spline;
         lineRenderer = GetComponent<LineRenderer>();
-        if(TangentSide == Tangent.LEFT)
+        if(TangentSide == Tangent.LEFT && !splineParent.loadedFromPrefab)
         {
-            if (splineParent.splineIndex == 0)
-            {
-                Destroy(gameObject);
-                return;
-            }
             Vector3 newPos = spline.GetPosition(splineParent.splineIndex)
                     - spline.GetPosition(splineParent.splineIndex - 1);
             spline.SetLeftTangent(splineParent.splineIndex, -newPos / 4);
@@ -41,7 +33,7 @@ public class TangentPoint : MonoBehaviour
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
             transform.position = mousePos;
-            Vector3 tangentPos = (mousePos - PathShapeController.controller.transform.position) - parentPos;
+            Vector3 tangentPos = (mousePos - controller.transform.position) - parentPos;
 
             if (Input.GetKey(KeyCode.LeftShift)) SnapToParentSpline(tangentPos, parentPos);
             else
@@ -60,19 +52,19 @@ public class TangentPoint : MonoBehaviour
         {
             if(TangentSide == Tangent.LEFT)
             {
-                transform.position = PathShapeController.controller.transform.position 
+                transform.position = controller.transform.position 
                     + (spline.GetLeftTangent(splineParent.splineIndex) + parentPos);
             }
             else
             {
-                transform.position = PathShapeController.controller.transform.position
+                transform.position = controller.transform.position
                     + (spline.GetRightTangent(splineParent.splineIndex) + parentPos);
             }
         }
         lineRenderer.SetPositions(
             new Vector3[] {
                 transform.position, 
-                PathShapeController.controller.transform.position + parentPos
+                controller.transform.position + parentPos
             });
 
     }
@@ -85,18 +77,31 @@ public class TangentPoint : MonoBehaviour
         isSelected = false;
     }
 
-    private void OnEnable()
+    public void Enable()
     {
-        if(TangentSide == Tangent.RIGHT)
+        gameObject.SetActive(true);
+        spline = controller.spline;
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0;
+        Vector3 newPos = mousePos - controller.transform.position
+            - spline.GetPosition(splineParent.splineIndex);
+
+        spline.SetRightTangent(splineParent.splineIndex, newPos / 4);
+    }
+
+/*    private void OnEnable()
+    {
+        if (TangentSide == Tangent.RIGHT)
         {
+            spline = controller.spline;
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
-            Vector3 newPos = mousePos - PathShapeController.controller.transform.position 
+            Vector3 newPos = mousePos - controller.transform.position 
                 - spline.GetPosition(splineParent.splineIndex);
                 
             spline.SetRightTangent(splineParent.splineIndex, newPos / 4);
         }
-    }
+    }*/
 
     private void SnapToParentSpline(Vector3 tangentPos, Vector3 parentPos)
     {
@@ -115,7 +120,7 @@ public class TangentPoint : MonoBehaviour
         //assign positions
         if(TangentSide == Tangent.LEFT) spline.SetLeftTangent(splineParent.splineIndex, tangentPos);
         else spline.SetRightTangent(splineParent.splineIndex, tangentPos);
-        transform.position = PathShapeController.controller.transform.position
+        transform.position = controller.transform.position
                 + (tangentPos + parentPos);
     }
 }

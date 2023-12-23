@@ -37,12 +37,12 @@ public class SoundManager : MonoBehaviour
     {
         if(!musicSource.isPlaying) 
         {
-            currentSong++;
             if (currentSong >= backgroundMusic.Length)
             {
                 currentSong = 0;
             }
             musicSource.PlayOneShot(backgroundMusic[currentSong]);
+            currentSong++;
         }
     }
 

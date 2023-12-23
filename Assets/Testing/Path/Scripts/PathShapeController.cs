@@ -1,30 +1,47 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
 
 public class PathShapeController : MonoBehaviour
 {
-    public static SpriteShapeController controller;
+    public SpriteShapeController shapeController;
     public GameObject SplinePrefab;
-    public static bool isSplineSelected;
-    private static List<SplinePoint> SplinePoints = new List<SplinePoint>();
-    //private Vector3 dragOffset;
+    public static bool isSplineSelected = false;
+    private List<SplinePoint> SplinePoints = new List<SplinePoint>();
     private Vector3 prevPos;
     private Vector3 nextPos;
 
+    private void Awake()
+    {
+
+        if (SceneManager.GetActiveScene().name == "game")
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                Destroy(transform.GetChild(i).gameObject);
+            }
+            GetComponent<EdgeCollider2D>().enabled = true;
+            this.enabled = false;
+        }
+    }
+
     void Start()
     {
-        isSplineSelected = false;
         prevPos = transform.position;
         nextPos = transform.position;
-        controller = GetComponent<SpriteShapeController>();
-        if (controller.spline.GetPointCount() != 0)
+        shapeController = GetComponent<SpriteShapeController>();
+        
+
+        if (shapeController.spline.GetPointCount() != 0)
         {
-            for (int i = 0; i < controller.spline.GetPointCount(); i++)
+            for (int i = shapeController.spline.GetPointCount() - 1; i >= 0; i--)
             {
-                Vector3 pos = (controller.transform.position + controller.spline.GetPosition(i));
-                SplinePoint obj = Instantiate(SplinePrefab, pos, Quaternion.identity).GetComponent<SplinePoint>();
-                obj.splineIndex = i;
+                Vector3 pos = (shapeController.transform.position + shapeController.spline.GetPosition(i));
+                SplinePoint obj = Instantiate(SplinePrefab, pos, Quaternion.identity, transform).GetComponent<SplinePoint>();
+                obj.controller = this;
+                obj.splineIndex = shapeController.spline.GetPointCount() - i - 1;
+                obj.loadedFromPrefab = true;
                 SplinePoints.Add(obj);
             }
         }
@@ -42,12 +59,12 @@ public class PathShapeController : MonoBehaviour
         }
     }
 
-    public static void RemoveSpline(int splineIndex)
+    public void RemoveSpline(int splineIndex)
     {
         try {
         if (splineIndex == SplinePoints.Count - 1) SplinePoints[splineIndex - 1].rightTangent.gameObject.SetActive(false);
         } catch { }
-        controller.spline.RemovePointAt(splineIndex);
+        shapeController.spline.RemovePointAt(splineIndex);
         SplinePoints.RemoveAt(splineIndex);
         int i = 0;
         SplinePoints.ForEach((spline) => { spline.splineIndex = i++; });
@@ -55,20 +72,21 @@ public class PathShapeController : MonoBehaviour
 
     private void CreateSplinePoint()
     {
-        int pointCount = controller.spline.GetPointCount();
-        Vector3 lastPoint = controller.spline.GetPosition(pointCount - 1) + controller.transform.position;
+        int pointCount = shapeController.spline.GetPointCount();
+        Vector3 lastPoint = shapeController.spline.GetPosition(pointCount - 1) + shapeController.transform.position;
         Vector3 newPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         newPoint.z = 0;
-        if (Vector3.Distance(lastPoint, newPoint) > 3f)
+        if (Vector3.Distance(lastPoint, newPoint) > 1f)
         {
-            controller.spline.InsertPointAt(pointCount, newPoint - controller.transform.position);
-            controller.spline.SetTangentMode(pointCount, ShapeTangentMode.Continuous);
-            controller.BakeMesh();
-            controller.BakeCollider();
-            SplinePoint obj = Instantiate(SplinePrefab, newPoint, Quaternion.identity).GetComponent<SplinePoint>();
+            shapeController.spline.InsertPointAt(pointCount, newPoint - shapeController.transform.position);
+            shapeController.spline.SetTangentMode(pointCount, ShapeTangentMode.Continuous);
+            shapeController.BakeMesh();
+            shapeController.BakeCollider();
+            SplinePoint obj = Instantiate(SplinePrefab, newPoint, Quaternion.identity, transform).GetComponent<SplinePoint>();
             obj.splineIndex = pointCount;
+            obj.controller = this;
             SplinePoints.Add(obj);
-            SplinePoints[pointCount - 1].rightTangent.gameObject.SetActive(true);
+            SplinePoints[pointCount - 1].rightTangent.Enable();
         }
     }
 }

@@ -7,6 +7,5 @@ public class LoadTest : MonoBehaviour
 {
     public void Load()
     {
-        EditorUtility.OpenFilePanel("choose map","",".obj");
     }
 }

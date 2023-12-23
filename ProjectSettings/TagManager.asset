@@ -10,6 +10,7 @@ TagManager:
   - moneyText
   - tower
   - UI
+  - map
   layers:
   - Default
   - TransparentFX

@@ -1,37 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using UnityEditor;
-using UnityEditor.U2D.Path;
 using UnityEngine;
-using UnityEngine.U2D;
 
 public class SplinePoint : MonoBehaviour
 {
+    public bool loadedFromPrefab = false;
     public int splineIndex;
     public bool isSelected = false;
     public GameObject tangentCircle;
     public TangentPoint leftTangent;
     public TangentPoint rightTangent;
     private float snapDistance = 0.4f;
-    private SpriteShapeController controller;
+    public PathShapeController controller;
     private LineRenderer snapLineRenderer;
 
     private void Awake()
     {
         snapLineRenderer = GetComponent<LineRenderer>();
-        controller = PathShapeController.controller;
     }
 
     private void Start()
     {
-        leftTangent = Instantiate(tangentCircle, transform).GetComponent<TangentPoint>();
+        if(splineIndex != 0)
+        {
+            leftTangent = Instantiate(tangentCircle, transform).GetComponent<TangentPoint>();
+            leftTangent.TangentSide = Tangent.LEFT;
+            leftTangent.controller = controller.shapeController;
+            leftTangent.splineParent = GetComponent<SplinePoint>();
+        }
         rightTangent = Instantiate(tangentCircle, transform).GetComponent<TangentPoint>();
-        leftTangent.TangentSide = Tangent.LEFT;
-        leftTangent.splineParent = GetComponent<SplinePoint>();
         rightTangent.TangentSide = Tangent.RIGHT;
         rightTangent.splineParent = GetComponent<SplinePoint>();
-        if(splineIndex == controller.spline.GetPointCount() - 1) rightTangent.gameObject.SetActive(false);
+        rightTangent.controller = controller.shapeController;
+        if(splineIndex == controller.shapeController.spline.GetPointCount() - 1) rightTangent.gameObject.SetActive(false);
+        GetComponent<SpriteRenderer>().enabled = true;
     }
 
 
@@ -41,20 +41,24 @@ public class SplinePoint : MonoBehaviour
     {
         if(isSelected) 
         {
-            if (Input.GetKeyDown(KeyCode.Delete) && controller.spline.GetPointCount() > 2) Destroy(gameObject);
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
             transform.position = mousePos;
             if (Input.GetKey(KeyCode.LeftShift)) SnapToSpline((mousePos - controller.transform.position));
             else
             {
-                controller.spline.SetPosition(splineIndex, 
+                controller.shapeController.spline.SetPosition(splineIndex, 
                     (mousePos - controller.transform.position));
                 snapLineRenderer.enabled = false;
             } 
+            if (Input.GetKeyDown(KeyCode.Delete) && controller.shapeController.spline.GetPointCount() > 2)
+            {
+                Destroy(gameObject);
+                controller.RemoveSpline(splineIndex);
+            }
         } else
         {
-            transform.position = controller.spline.GetPosition(splineIndex) + controller.transform.position;
+            transform.position = controller.shapeController.spline.GetPosition(splineIndex) + controller.transform.position;
         }
     }
 
@@ -69,13 +73,8 @@ public class SplinePoint : MonoBehaviour
         isSelected = false;
         PathShapeController.isSplineSelected = isSelected;
         snapLineRenderer.enabled = false;
-        controller.BakeMesh();
-        controller.BakeCollider();
-    }
-
-    private void OnDestroy()
-    {
-        PathShapeController.RemoveSpline(splineIndex);
+        controller.shapeController.BakeMesh();
+        controller.shapeController.BakeCollider();
     }
 
     private void SnapToSpline(Vector3 localPos)
@@ -86,10 +85,10 @@ public class SplinePoint : MonoBehaviour
         bool horizontal = false;
         int index = -1;
 
-        for (int i = 0; i < controller.spline.GetPointCount(); i++)
+        for (int i = 0; i < controller.shapeController.spline.GetPointCount(); i++)
         {
             if (i == splineIndex) continue;
-            Vector3 splinePos = controller.spline.GetPosition(i);
+            Vector3 splinePos = controller.shapeController.spline.GetPosition(i);
             //horizontal check
             distance = Mathf.Abs(splinePos.y - localPos.y);
             if (distance <= snapDistance)
@@ -138,6 +137,6 @@ public class SplinePoint : MonoBehaviour
         }
         else snapLineRenderer.enabled = false;
 
-        controller.spline.SetPosition(splineIndex, localPos);
+        controller.shapeController.spline.SetPosition(splineIndex, localPos);
     }
 }
