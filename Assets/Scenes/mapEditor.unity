@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &43537866 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6591487682249698706, guid: 5213a71fd446a584e9c4519110ceea58, type: 3}
+  m_PrefabInstance: {fileID: 736021465}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b743370ac3e4ec2a1668f5455a8ef8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &161860195 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3069229806156971452, guid: 5213a71fd446a584e9c4519110ceea58, type: 3}
@@ -140,6 +151,8 @@ GameObject:
   - component: {fileID: 320031614}
   - component: {fileID: 320031616}
   - component: {fileID: 320031617}
+  - component: {fileID: 320031618}
+  - component: {fileID: 320031619}
   m_Layer: 0
   m_Name: MapEditor
   m_TagString: Untagged
@@ -170,6 +183,7 @@ MonoBehaviour:
   playerName: {fileID: 1439551810}
   playerPassword: {fileID: 2020592542}
   terrainDropdown: {fileID: 2119989724}
+  objectDropdown: {fileID: 43537866}
 --- !u!4 &320031615
 Transform:
   m_ObjectHideFlags: 0
@@ -183,7 +197,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &320031616
 MonoBehaviour:
@@ -220,6 +234,36 @@ MonoBehaviour:
   RoughRock: {fileID: 21300000, guid: 94af863e41e2a91478fc9537cb846aa7, type: 3}
   RustyMetal: {fileID: 21300000, guid: 2d4707c512d2a5c40a8cb213eb919f05, type: 3}
   SnowyRock: {fileID: 21300000, guid: 7971b29091875c540918f3188c5ee077, type: 3}
+--- !u!114 &320031618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320031613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c9e268ae1074e54c9618ad55103ec4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LargeRock1: {fileID: 2203396626388179233, guid: a84305d6aad783a4c876520f81b99de5, type: 3}
+  LargeRock2: {fileID: 7306599527916319746, guid: 274ae84e15a418746805b0c0f772062b, type: 3}
+  SmallRock1: {fileID: 88901325487988532, guid: f9397c84260c6dd48938eabc2ecb70c6, type: 3}
+  SmallRock2: {fileID: 3658443209856500099, guid: 84cd6c79aee5a7e409f1ed8665f7c4ab, type: 3}
+  SmallRock3: {fileID: 6531121087864700793, guid: 90824930e4a051247a460c4927267562, type: 3}
+  SmallRock4: {fileID: 5617572002657247251, guid: 4451a318ca6357245b9f3e701dad8e13, type: 3}
+--- !u!114 &320031619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320031613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7614ecd163b4e1744a3071a4287f0a52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &718648815 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7945441214562888171, guid: 5213a71fd446a584e9c4519110ceea58, type: 3}
@@ -283,6 +327,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3885944270215970475, guid: 5213a71fd446a584e9c4519110ceea58, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4321595763120765220, guid: 5213a71fd446a584e9c4519110ceea58, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4321595763120765220, guid: 5213a71fd446a584e9c4519110ceea58, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -422,6 +474,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: MapEditor, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 5784755823301895796, guid: 5213a71fd446a584e9c4519110ceea58, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.00001335144
+      objectReference: {fileID: 0}
     - target: {fileID: 6126953672848016834, guid: 5213a71fd446a584e9c4519110ceea58, type: 3}
       propertyPath: m_Name
       value: UploadButton
@@ -429,6 +485,22 @@ PrefabInstance:
     - target: {fileID: 6525450205760834942, guid: 5213a71fd446a584e9c4519110ceea58, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6591487682249698706, guid: 5213a71fd446a584e9c4519110ceea58, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 320031614}
+    - target: {fileID: 6591487682249698706, guid: 5213a71fd446a584e9c4519110ceea58, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelectObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 6591487682249698706, guid: 5213a71fd446a584e9c4519110ceea58, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MapEditor, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6591487682249698706, guid: 5213a71fd446a584e9c4519110ceea58, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6876690670415803528, guid: 5213a71fd446a584e9c4519110ceea58, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -600,7 +672,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 1348943402}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 2
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -708,7 +780,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1348943400}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10.000008}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1035,7 +1107,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7803881210032326880, guid: 511f6ee615f04284ebff2931d8afbe3e, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7803881210032326880, guid: 511f6ee615f04284ebff2931d8afbe3e, type: 3}
       propertyPath: m_LocalPosition.x

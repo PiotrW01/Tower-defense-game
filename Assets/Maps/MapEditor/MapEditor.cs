@@ -13,10 +13,8 @@ public class MapEditor : MonoBehaviour
     public GameObject optionsMenu;
     public GameObject loginCredentials;
     public GameObject MapPrefab;
-    
     public SpriteRenderer TerrainRenderer;
-    //MapInformation mapInformation;
-
+    
     public TMP_InputField playerMoney;
     public TMP_InputField mapName;
     public TMP_InputField mapWidth;
@@ -24,11 +22,12 @@ public class MapEditor : MonoBehaviour
     public TMP_InputField playerName;
     public TMP_InputField playerPassword;
     public TMP_Dropdown terrainDropdown;
+    public TMP_Dropdown objectDropdown;
 
     void Start()
     {
-        //mapInformation = GameObject.FindGameObjectWithTag("map").GetComponent<MapInformation>();
         LoadTerrainOptions();
+        LoadObjectOptions();
     }
 
     private void Update()
@@ -47,12 +46,41 @@ public class MapEditor : MonoBehaviour
         terrainDropdown.AddOptions(options);
     }
 
+    public void LoadObjectOptions()
+    {
+        List<TMP_Dropdown.OptionData> options = new();
+        options.Add(new TMP_Dropdown.OptionData("None"));
+        foreach (var key in EnvDictionary.Objects.Keys)
+        {
+            options.Add(new TMP_Dropdown.OptionData(key.ToString()));
+        }
+        objectDropdown.value = 0;
+        objectDropdown.AddOptions(options);
+    }
+
+
     public void ChangeTerrain()
     {
         Terrain terrainType;
         Enum.TryParse(terrainDropdown.options[terrainDropdown.value].text, out terrainType);
         Debug.Log(terrainType);
         TerrainRenderer.sprite = TerrainDictionary.Sprites[terrainType];
+    }
+
+    public void SelectObject()
+    {
+        if(objectDropdown.value == 0)
+        {
+            Destroy(ObjectPlacing.heldObject);
+            return;
+        }
+        Env objectType;
+        Enum.TryParse(terrainDropdown.options[objectDropdown.value].text, out objectType);
+        Debug.Log(objectType);
+        GameObject obj = Instantiate(EnvDictionary.Objects[objectType], GameObject.FindGameObjectWithTag("map").transform.Find("Environment"));
+        obj.AddComponent<ObjectHandler>();
+
+        ObjectPlacing.heldObject = obj;
     }
 
     public void ToggleOptionsMenu()
@@ -89,24 +117,6 @@ public class MapEditor : MonoBehaviour
 
         FileManager.SaveMapData(data);
     }
-
-/*    public void LoadMap()
-    {
-        
-        MapData data = FileManager.LoadMapData("test");
-        StartCoroutine(MapLoader(data));
-    }
-
-    IEnumerator MapLoader(MapData data)
-    {
-        Destroy(GameObject.FindGameObjectWithTag("map"));
-        yield return new WaitForFixedUpdate();
-        var newMap = Instantiate(MapPrefab);
-        TerrainRenderer = newMap.transform.Find("TerrainSprite").GetComponent<SpriteRenderer>();
-        newMap.GetComponent<MapLoader>().data = data;
-        yield break;
-    }*/
-
     public void GoToMenu()
     {
         SoundManager.Instance.PlayButtonClick();

@@ -7,9 +7,9 @@ public class BackgroundAnimation : MonoBehaviour
     public SpriteRenderer backgroundImage;
     public SpriteRenderer bigStars;
     public SpriteRenderer smallStars;
-    private float closeSpeed = 0.24f;
-    private float farSpeed = 1.24f;
-    private float backgroundSpeed = 1f;
+    private float closeSpeed = 0.34f;
+    private float farSpeed = 1f;
+    private float backgroundSpeed = 0.1f;
 
     private float repeatWidthBackground;
     private float repeatWidthCloseStars;

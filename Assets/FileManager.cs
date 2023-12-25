@@ -67,6 +67,8 @@ public class MapData
     public Terrain terrainType;
     public Vector2[] SplinePos;
     public Vector2[] TangentPos;
+    // x,y - coords, z - object ID
+    public Vector3[] EnvironmentObjects;
 }
 
 /*[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
