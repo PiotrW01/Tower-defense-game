@@ -12,6 +12,13 @@ public class MainMenuButtons : MonoBehaviour
         SceneManager.LoadScene("game");
     }
 
+    public void LoadMapEditor()
+    {
+        SoundManager.Instance.PlayButtonClick();
+        SceneManager.LoadScene("mapEditor");
+    }
+
+
     public void QuitGame()
     {
         SoundManager.Instance.PlayButtonClick();

@@ -11,7 +11,37 @@ using UnityEngine.Networking;
 
 public class TestAPI : MonoBehaviour
 {
-    //add a refresh token too
+    public void Register()
+    {
+        if (!NetworkManager.Instance.HasCredentialsSet()) return;
+        NetworkManager.Instance.Register();
+    }
+
+    public void GetHighscores()
+    {
+        NetworkManager.Instance.GetHighscores(1000001);
+    }
+
+    public void GetLatestMaps()
+    {
+        //NetworkManager.Instance.GetLatestMaps(0);
+    }
+
+    public void UploadScore()
+    {
+        NetworkManager.Instance.UploadScore(1000000, 99999);
+    }
+
+    public void UploadMap()
+    {
+        MapData data = new MapData();
+        data.name = "test000";
+
+        NetworkManager.Instance.UploadMap(data);
+    }
+
+
+/*    //add a refresh token too
     private static string JWT = "";
     private int triedConnections = 0;
 
@@ -164,5 +194,5 @@ public class TestAPI : MonoBehaviour
     public class Wrapper<T>
     {
         public T[] results;
-    }
+    }*/
 }

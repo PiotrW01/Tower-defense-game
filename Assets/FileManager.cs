@@ -8,34 +8,23 @@ using UnityEngine;
 
 public static class FileManager
 {
-
-
-/*    public static MapData LoadMapData(string name)
+    public static MapData LoadMapData(string name)
     {
-        OpenFileName ofn = new OpenFileName();
-
-        ofn.structSize = Marshal.SizeOf(ofn);
-
-        ofn.filter = "Json\0*.json\0";
-
-        ofn.file = new String(new char[256]);
-        ofn.maxFile = ofn.file.Length;
-
-        ofn.fileTitle = new String(new char[64]);
-        ofn.maxFileTitle = ofn.fileTitle.Length;
-
-        ofn.initialDir = "C:\\";
-        ofn.title = "Select the map to load";
-        ofn.defExt = "json";
-        LibWrap.GetOpenFileName(ofn);
-        string json = File.ReadAllText(ofn.file);
+        string json = File.ReadAllText(Application.dataPath + "/Maps/" + name + ".json");
         MapData mapData = JsonUtility.FromJson<MapData>(json); 
         return mapData;
-    }*/
+    }
 
-    public static void LoadAllMapData()
+    public static MapData[] LoadAllMapData()
     {
-        string[] names = Directory.GetFiles(Application.persistentDataPath);
+        string[] paths = Directory.GetFiles(Application.dataPath + "/Maps", "*.json");
+        MapData[] mapData = new MapData[paths.Length];
+        for (int i = 0; i < paths.Length; i++)
+        {
+            string json = File.ReadAllText(paths[i]);
+            mapData[i] = JsonUtility.FromJson<MapData>(json);
+        }
+        return mapData;
     }
 
     public static void SaveMapData(MapData data)
@@ -45,8 +34,8 @@ public static class FileManager
         {
             Directory.CreateDirectory(Application.dataPath + "/Maps");
         }
-        string path = Path.Combine(Application.dataPath + "/Maps", data.name + ".json");
-
+        string path = Path.Combine(Application.dataPath + "/Maps", data.mapAuthor + data.name + ".json");
+        
         try
         {
             File.WriteAllText(path, json);
@@ -56,19 +45,46 @@ public static class FileManager
             Debug.Log(e.Message);
         }
     }
+
+    public static void DeleteMapData(string mapAuthor, string mapName)
+    {
+        try
+        {
+            File.Delete(Application.dataPath + "/Maps/" + mapAuthor + mapName + ".json");
+        } catch
+        {
+            Debug.Log("could not delete file");
+        }
+    }
 }
 
+[System.Serializable]
 public class MapData
 {
     public int id = 0;
     public string name;
+    public string mapAuthor;
     public int playerStartingMoney = 500;
     public Vector2 size;
     public Terrain terrainType;
     public Vector2[] SplinePos;
     public Vector2[] TangentPos;
-    // x,y - coords, z - object ID
-    public Vector3[] EnvironmentObjects;
+    public Vector2[] EnvObjectsPos;
+    public Env[] EnvObjectsType;
+}
+
+[System.Serializable]
+public class PlayerScore
+{
+    public string username;
+    public int totalScore;
+}
+
+public class MapSearchInformation
+{
+    public int mapID;
+    public string authorName;
+    public string mapName;
 }
 
 /*[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]

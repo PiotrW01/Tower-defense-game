@@ -9,6 +9,7 @@ public class MapLoader : MonoBehaviour
 
     private void Start()
     {
+        data = MapPreview.ChosenMapData;
         if (data == null)
         {
             transform.Find("PathPrefab").GetComponent<PathShapeController>().enabled = true;
@@ -16,6 +17,7 @@ public class MapLoader : MonoBehaviour
         }
         var terrainSprite = transform.Find("TerrainSprite").GetComponent<SpriteRenderer>();
         terrainSprite.size = data.size;
+        terrainSprite.sprite = TerrainDictionary.Sprites[data.terrainType];
         var pathShape = transform.Find("PathPrefab").GetComponent<SpriteShapeController>();
 
         pathShape.spline.Clear();
@@ -28,5 +30,10 @@ public class MapLoader : MonoBehaviour
         }
         transform.Find("PathPrefab").GetComponent<PathShapeController>().enabled = true;
 
+        var envContainer = transform.Find("Environment");
+        for (int i = 0; i < data.EnvObjectsPos.Length; i++)
+        {
+            Instantiate(EnvDictionary.Objects[data.EnvObjectsType[i]], data.EnvObjectsPos[i] , Quaternion.identity, envContainer);
+        }
     }
 }

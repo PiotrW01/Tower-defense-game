@@ -1,15 +1,15 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
-using System.Text;
-using System.Runtime.InteropServices;
 
 public class MapEditor : MonoBehaviour
 {
+    // zamiast tych to zczytaæ to z obiektu environment na mapie
+    public static List<GameObject> envObjects;
+    public static bool isMenu = false;
     public GameObject optionsMenu;
     public GameObject loginCredentials;
     public GameObject MapPrefab;
@@ -26,6 +26,22 @@ public class MapEditor : MonoBehaviour
 
     void Start()
     {
+        var obj = Instantiate(MapPrefab, Vector3.zero, Quaternion.identity);
+        TerrainRenderer = obj.transform.Find("TerrainSprite").GetComponent<SpriteRenderer>();
+        if(MapPreview.ChosenMapData != null)
+        {
+            var mapData = MapPreview.ChosenMapData;
+            mapName.text = mapData.name;
+            mapWidth.text = mapData.size.x.ToString();
+            mapHeight.text = mapData.size.y.ToString();
+            playerMoney.text = mapData.playerStartingMoney.ToString();
+        } else
+        {
+            playerMoney.text = "500";
+            mapWidth.text = TerrainRenderer.size.x.ToString();
+            mapHeight.text = TerrainRenderer.size.y.ToString();
+        }
+        envObjects = new();
         LoadTerrainOptions();
         LoadObjectOptions();
     }
@@ -75,11 +91,18 @@ public class MapEditor : MonoBehaviour
             return;
         }
         Env objectType;
-        Enum.TryParse(terrainDropdown.options[objectDropdown.value].text, out objectType);
+        Enum.TryParse(objectDropdown.options[objectDropdown.value].text, out objectType);
         Debug.Log(objectType);
-        GameObject obj = Instantiate(EnvDictionary.Objects[objectType], GameObject.FindGameObjectWithTag("map").transform.Find("Environment"));
-        obj.AddComponent<ObjectHandler>();
-
+        GameObject obj = Instantiate(EnvDictionary.Objects[objectType], GameObject.FindGameObjectWithTag("mapEnv").transform);
+        try
+        {
+            obj.GetComponent<BoxCollider2D>().enabled = false;
+        } catch
+        {
+            obj.GetComponent<CircleCollider2D>().enabled = false;
+        }
+        ObjectPlacing.envObjectType = objectType;
+        Destroy(ObjectPlacing.heldObject);
         ObjectPlacing.heldObject = obj;
     }
 
@@ -87,32 +110,49 @@ public class MapEditor : MonoBehaviour
     {
         if (optionsMenu.activeInHierarchy)
         {
+            isMenu = false;
             optionsMenu.SetActive(false);
         } else
         {
+            isMenu = true;
             optionsMenu.SetActive(true);
         }
     }
 
     public void SaveMap()
     {
+        if (NetworkManager.username == "")
+        {
+            ShowLoginFields();
+            return;
+        };
         if (mapName.text.Length < 3) return;
-        var shapeController = GameObject.FindGameObjectWithTag("map")
-            .transform.Find("PathPrefab").GetComponent<SpriteShapeController>().spline;
+        var shapeController = GameObject.FindGameObjectWithTag("path").GetComponent<SpriteShapeController>().spline;
         var data = new MapData();
         int pointCount = shapeController.GetPointCount();
         data.name = mapName.text;
+        data.mapAuthor = NetworkManager.username;
         data.SplinePos = new Vector2[pointCount];
         data.TangentPos = new Vector2[pointCount * 2];
         data.terrainType = (Terrain)Enum.Parse(typeof(Terrain), terrainDropdown.options[terrainDropdown.value].text);
         data.size = TerrainRenderer.size;
+        data.EnvObjectsPos = new Vector2[envObjects.Count];
+        data.EnvObjectsType = new Env[envObjects.Count];
 
+        //pathPoints
         for (int i = 0; i < pointCount; i++)
         {
             data.SplinePos[i] = shapeController.GetPosition(i);
             data.TangentPos[2 * i] = shapeController.GetLeftTangent(i);
             data.TangentPos[2 * i + 1] = shapeController.GetRightTangent(i);
             Debug.Log(i + " " + shapeController.GetPosition(i));
+        }
+
+        //envObjects
+        for (int i = 0; i < envObjects.Count; i++)
+        {
+            data.EnvObjectsPos[i] = envObjects[i].transform.position;
+            data.EnvObjectsType[i] = envObjects[i].GetComponent<ObjectHandler>().objectType;
         }
 
         FileManager.SaveMapData(data);
@@ -138,6 +178,12 @@ public class MapEditor : MonoBehaviour
 
     public void UploadMap()
     {
-        //NetworkManager.Instance.UploadMap(mapInformation.gameObject);
+        //check if username and password are set
+        //set the mapAuthor to the mapData
+    }
+
+    public void ShowLoginFields()
+    {
+        loginCredentials.SetActive(true);
     }
 }

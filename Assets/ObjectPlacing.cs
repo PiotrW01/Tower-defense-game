@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class ObjectPlacing : MonoBehaviour
 {
     public static GameObject heldObject;
+    public static Env envObjectType;
 
     // Update is called once per frame
     void Update()
@@ -15,12 +16,20 @@ public class ObjectPlacing : MonoBehaviour
         newPos.z = 0;
         heldObject.transform.position = newPos;
 
-        if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        if(Input.GetMouseButtonDown(0) && !MapEditor.isMenu)
         {
-            // TODO: set components active
-
-            
-            Instantiate(heldObject, newPos, Quaternion.identity, GameObject.FindGameObjectWithTag("mapEnv").transform);
+            GameObject newObj = Instantiate(heldObject, newPos, Quaternion.identity, GameObject.FindGameObjectWithTag("mapEnv").transform);
+            newObj.AddComponent<ObjectHandler>();
+            try
+            {
+                newObj.GetComponent<BoxCollider2D>().enabled = true;
+            }
+            catch
+            {
+                newObj.GetComponent<CircleCollider2D>().enabled = true;
+            }
+            newObj.GetComponent<ObjectHandler>().objectType = envObjectType;
+            MapEditor.envObjects.Add(newObj);
         }
     }
 }

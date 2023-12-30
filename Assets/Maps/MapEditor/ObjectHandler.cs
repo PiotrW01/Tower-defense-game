@@ -9,6 +9,12 @@ public class ObjectHandler : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (Input.GetKeyDown(KeyCode.Delete) && !EventSystem.current.IsPointerOverGameObject()) Destroy(this.gameObject);
+        if (Input.GetKeyDown(KeyCode.Delete) && !MapEditor.isMenu) 
+            Destroy(this.gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        MapEditor.envObjects.Remove(this.gameObject);
     }
 }
