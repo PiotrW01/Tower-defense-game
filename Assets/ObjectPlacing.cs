@@ -20,14 +20,6 @@ public class ObjectPlacing : MonoBehaviour
         {
             GameObject newObj = Instantiate(heldObject, newPos, Quaternion.identity, GameObject.FindGameObjectWithTag("mapEnv").transform);
             newObj.AddComponent<ObjectHandler>();
-            try
-            {
-                newObj.GetComponent<BoxCollider2D>().enabled = true;
-            }
-            catch
-            {
-                newObj.GetComponent<CircleCollider2D>().enabled = true;
-            }
             newObj.GetComponent<ObjectHandler>().objectType = envObjectType;
             MapEditor.envObjects.Add(newObj);
         }

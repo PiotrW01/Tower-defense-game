@@ -34,7 +34,7 @@ public static class FileManager
         {
             Directory.CreateDirectory(Application.dataPath + "/Maps");
         }
-        string path = Path.Combine(Application.dataPath + "/Maps", data.mapAuthor + data.name + ".json");
+        string path = Application.dataPath + "/Maps/" + data.mapAuthor + data.name + ".json";
         
         try
         {

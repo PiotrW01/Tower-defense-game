@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6158708831145357408}
-  - component: {fileID: 7802385996140662807}
-  m_Layer: 0
+  - component: {fileID: 7136612540292569963}
+  - component: {fileID: -5787082132043217165}
+  m_Layer: 7
   m_Name: LargeRock2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,32 +34,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &7802385996140662807
-BoxCollider2D:
+--- !u!54 &7136612540292569963
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7306599527916319746}
-  m_Enabled: 1
-  m_Density: 1
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!65 &-5787082132043217165
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7306599527916319746}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.0029000193, y: 0.0029000044}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.9398541, y: 2.268836}
-  m_EdgeRadius: 0
+  m_Size: {x: 1.9610918, y: 2.3057203, z: 2.262423}
+  m_Center: {x: 0, y: 0, z: -1.1271529}
 --- !u!1 &8646395996009202568
 GameObject:
   m_ObjectHideFlags: 0
@@ -70,7 +74,7 @@ GameObject:
   - component: {fileID: 7767235280782812743}
   - component: {fileID: 6846678807103593208}
   - component: {fileID: 4440972612699370472}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Large Rock 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

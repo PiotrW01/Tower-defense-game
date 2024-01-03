@@ -173,6 +173,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4021067fc3c75e14e93649eb997b9a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data:
+    id: 0
+    name: 
+    mapAuthor: 
+    playerStartingMoney: 500
+    size: {x: 0, y: 0}
+    terrainType: 0
+    SplinePos: []
+    TangentPos: []
+    EnvObjectsPos: []
+    EnvObjectsType: 
 --- !u!1 &7803881210542749495
 GameObject:
   m_ObjectHideFlags: 0

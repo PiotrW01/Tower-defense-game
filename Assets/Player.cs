@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public GameObject MapPrefab;
     public static int health;
     public static int money;
     public static bool isAlive;
@@ -18,11 +19,12 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        Instantiate(MapPrefab);
         moneyText = GameObject.Find("MoneyText").GetComponent<TextMeshProUGUI>();
         healthText = GameObject.Find("HealthText").GetComponent<TextMeshProUGUI>();
         GameObject.Find("UserInterface").transform.Find("GameOverInterface").gameObject.SetActive(false);
 
-        money = 99999;
+        money = MapPreview.ChosenMapData.playerStartingMoney;
         health = 100;
 
         isAlive = true;
@@ -39,8 +41,7 @@ public class Player : MonoBehaviour
     public static void GameOver()
     {
         isAlive = false;
-        GameObject.Find("GameEvents").SetActive(false);
-        GameObject.Find("BuyMenu").GetComponent<BuyMenuButtons>().enabled = false;
+        GameObject.Find("EventSystem").SetActive(false);
         GameObject.Find("UserInterface").transform.Find("GameOverInterface").gameObject.SetActive(true);
     }
 

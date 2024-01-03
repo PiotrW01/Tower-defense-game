@@ -1,25 +1,17 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class NetworkManager : MonoBehaviour
 {
-    public static NetworkManager Instance;
-    public static string username = "username1";
-    private static string password = "password1";
+    //username1 password1
+    public static string username = "";
+    public static string password = "";
 
-    void Start()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    public TMP_InputField usernameField;
+    public TMP_InputField passwordField;
+    public TextMeshProUGUI confirmField;
 
     // porozdzielac korutyny do odpowiednich skryptow zamiast w tym jednym
     IEnumerator RegisterAsync()
@@ -42,142 +34,156 @@ public class NetworkManager : MonoBehaviour
         yield break;
     }
 
-    // top 10
-    IEnumerator GetHighscoresAsync(int mapID)
-    {
-        string jsonData = "{\"mapID\":\"" + mapID + "\"}";
-        var www = CreateJsonRequest("http://localhost:5000/scores/", "GET", jsonData);
-        yield return www.SendWebRequest();
-        if (www.result != UnityWebRequest.Result.Success)
+    /*    // top 10
+        IEnumerator GetHighscoresAsync(int mapID)
         {
-            Debug.Log("Error: " + www.error);
-        }
-        else
-        {
-            ScoresRequest request = JsonUtility.FromJson<ScoresRequest>(www.downloadHandler.text);
-            foreach (var score in request.scores)
+            string jsonData = "{\"mapID\":\"" + mapID + "\"}";
+            var www = CreateJsonRequest("http://localhost:5000/scores/", "GET", jsonData);
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
             {
-                Debug.Log(score.username + score.totalScore);
+                Debug.Log("Error: " + www.error);
             }
-        }
-
-        www.Dispose();
-        yield break;
-    }
-
-/*    // top 10, top 20...
-    IEnumerator GetLatestMapsAsync(int page)
-    {
-        var www = CreateJsonRequest("http://localhost:5000/maps/" + page, "GET", "");
-        yield return www.SendWebRequest();
-        if (www.result != UnityWebRequest.Result.Success)
-        {
-            Debug.Log("Error: " + www.error);
-        }
-        else
-        {
-            Debug.Log(www.downloadHandler.text);
-            MapsRequest req = JsonUtility.FromJson<MapsRequest>(www.downloadHandler.text);
-            foreach (var data in req.maps)
+            else
             {
-                var t = JsonUtility.FromJson<MapData>(data.jsonMapData);
-                Debug.Log(t.id = data.mapID);
+                ScoresRequest request = JsonUtility.FromJson<ScoresRequest>(www.downloadHandler.text);
+                foreach (var score in request.scores)
+                {
+                    Debug.Log(score.username + score.totalScore);
+                }
             }
+
+            www.Dispose();
+            yield break;
         }
 
-        www.Dispose();
-        yield break;
-    }*/
-
-    IEnumerator UploadScoreAsync(int mapID, int score)
-    {
-        UploadRequest request = new UploadRequest();
-        request.username = username;
-        request.password = password;
-        request.mapID = mapID;
-        request.score = score;
-        string jsonData = JsonUtility.ToJson(request);
-
-        UnityWebRequest www = CreateJsonRequest("http://localhost:5000/scores/upload", "PUT", jsonData);
-        yield return www.SendWebRequest();
-
-        if (www.result != UnityWebRequest.Result.Success)
+        // top 10, top 20...
+        IEnumerator GetLatestMapsAsync(int page)
         {
-            Debug.Log("Error: " + www.error);
+            var www = CreateJsonRequest("http://localhost:5000/maps/" + page, "GET", "");
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Error: " + www.error);
+            }
+            else
+            {
+                Debug.Log(www.downloadHandler.text);
+                MapsRequest req = JsonUtility.FromJson<MapsRequest>(www.downloadHandler.text);
+                foreach (var data in req.maps)
+                {
+                    var t = JsonUtility.FromJson<MapData>(data.jsonMapData);
+                    Debug.Log(t.id = data.mapID);
+                }
+            }
+
+            www.Dispose();
+            yield break;
         }
-        else
+
+        IEnumerator UploadScoreAsync(int mapID, int score)
         {
-            Debug.Log(www.responseCode);
+            UploadRequest request = new UploadRequest();
+            request.username = username;
+            request.password = password;
+            request.mapID = mapID;
+            request.score = score;
+            string jsonData = JsonUtility.ToJson(request);
+
+            UnityWebRequest www = CreateJsonRequest("http://localhost:5000/scores/upload", "PUT", jsonData);
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Error: " + www.error);
+            }
+            else
+            {
+                Debug.Log(www.responseCode);
+            }
+
+            www.Dispose();
+            yield break;
         }
 
-        www.Dispose();
-        yield break;
-    }
-
-    IEnumerator UploadMapAsync(MapData mapData)
-    {
-        // get back mapID and set it
-        UploadRequest request = new UploadRequest();
-        request.mapData = mapData;
-        request.username = username;
-        request.password = password;
-        string jsonData = JsonUtility.ToJson(request);
-
-        UnityWebRequest www = CreateJsonRequest("http://localhost:5000/maps/upload", "PUT", jsonData);
-        yield return www.SendWebRequest();
-
-        if (www.result != UnityWebRequest.Result.Success)
+        IEnumerator UploadMapAsync(MapData mapData)
         {
-            Debug.Log("Error: " + www.error);
+            // get back mapID and set it
+            UploadRequest request = new UploadRequest();
+            request.mapData = mapData;
+            request.username = username;
+            request.password = password;
+            string jsonData = JsonUtility.ToJson(request);
+
+            UnityWebRequest www = CreateJsonRequest("http://localhost:5000/maps/upload", "PUT", jsonData);
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Error: " + www.error);
+            }
+            else
+            {
+                Debug.Log(www.downloadHandler.text);
+            }
+
+            www.Dispose();
+            yield break;
         }
-        else
+
+        public void UploadMap(MapData mapData)
         {
-            Debug.Log(www.downloadHandler.text);
+            StartCoroutine(UploadMapAsync(mapData));
         }
 
-        www.Dispose();
-        yield break;
-    }
+        public void Register()
+        {
+            StartCoroutine(RegisterAsync());
+        }
 
-    public void UploadMap(MapData mapData)
-    {
-        StartCoroutine(UploadMapAsync(mapData));
-    }
+        public void GetHighscores(int mapID)
+        {
+            StartCoroutine(GetHighscoresAsync(mapID));
+        }
+        public void GetLatestMaps(int page)
+        {
+            StartCoroutine(GetLatestMapsAsync(page));
+        }
 
-    public void Register()
-    {
-        StartCoroutine(RegisterAsync());
-    }
+        public void UploadScore(int mapID, int score)
+        {
+            StartCoroutine(UploadScoreAsync(mapID, score));
+        }
 
-    public void GetHighscores(int mapID)
-    {
-        StartCoroutine(GetHighscoresAsync(mapID));
-    }
-/*    public void GetLatestMaps(int page)
-    {
-        StartCoroutine(GetLatestMapsAsync(page));
-    }*/
+        public static void SetUsername(string newUsername)
+        {
+            username = newUsername;
+        }
 
-    public void UploadScore(int mapID, int score)
-    {
-        StartCoroutine(UploadScoreAsync(mapID, score));
-    }
+        public static void SetPassword(string newPassword)
+        {
+            password = newPassword;
+        }
 
-    public static void SetUsername(string newUsername)
-    {
-        username = newUsername;
-    }
+        public bool HasCredentialsSet()
+        {
+            if (username != "" && password != "") return true;
+            return false;
+        }*/
 
-    public static void SetPassword(string newPassword)
-    {
-        password = newPassword;
-    }
-
-    public bool HasCredentialsSet()
+    public static bool HasCredentialsSet()
     {
         if (username != "" && password != "") return true;
         return false;
     }
+    public void SetCredentials()
+    {
+        username = usernameField.text;
+        password = passwordField.text;
+        Debug.Log(username + password);
+        confirmField.text = "Saved!";
+    }
+
 
     public static UnityWebRequest CreateJsonRequest(string url, string method, string jsonData)
     {

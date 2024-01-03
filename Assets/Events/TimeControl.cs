@@ -11,9 +11,6 @@ public class TimeControl : MonoBehaviour
     public static int[] gameSpeeds = new int[] { 1, 2, 4 };
 
     public TextMeshProUGUI[] textMeshes;
-    /*    GameObject[] obj;
-        GameObject[] obj2;
-        GameObject[] obj3;*/
 
 
     private void Start()
@@ -68,50 +65,4 @@ public class TimeControl : MonoBehaviour
         Time.timeScale = gameSpeeds[gameSpeed];
         textMeshes[gameSpeed].color = new Color(1f, 1f, 0f);
     }
-
-/*    private void onGamePause()
-    {
-        obj = GameObject.FindGameObjectsWithTag("enemy");
-
-        foreach(GameObject enemy in obj)
-        {
-            enemy.GetComponent<enemyMovement>().enabled = false;
-        }
-
-        obj2 = GameObject.FindGameObjectsWithTag("tower");
-
-        foreach (GameObject tower in obj2)
-        {
-            tower.GetComponent<Turret>().enabled = false;
-        }
-
-        obj3 = GameObject.FindGameObjectsWithTag("bullet");
-
-        foreach (GameObject bullet in obj3)
-        {
-            bullet.GetComponent<bullet>().enabled = false;
-        }
-
-        gameObject.GetComponent<spawnEnemy>().CancelInvoke();
-    }
-
-    private void onGameResume()
-    {
-        foreach (GameObject enemy in obj)
-        {
-            enemy.GetComponent<enemyMovement>().enabled = true;
-        }
-
-        foreach (GameObject tower in obj2)
-        {
-            tower.GetComponent<Turret>().enabled = true;
-        }
-
-        foreach (GameObject bullet in obj3)
-        {
-            bullet.GetComponent<bullet>().enabled = true;
-        }
-
-        gameObject.GetComponent<spawnEnemy>().enabled = true;
-    }*/
 }

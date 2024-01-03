@@ -6563,7 +6563,7 @@ GameObject:
   - component: {fileID: 4445334074598753171}
   - component: {fileID: 7700785140029482282}
   m_Layer: 5
-  m_Name: LoadButton
+  m_Name: UploadButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6826,8 +6826,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Please enter your username and password and login in order to upload the
-    map
+  m_text: Please enter your username and password in order to upload the map
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6f840862b899b2c46b65f1d6b5cac650, type: 2}
   m_sharedMaterial: {fileID: 8049147054559066009, guid: 6f840862b899b2c46b65f1d6b5cac650, type: 2}

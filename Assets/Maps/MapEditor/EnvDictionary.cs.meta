@@ -3,7 +3,22 @@ guid: 0c9e268ae1074e54c9618ad55103ec4c
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - LargeRock1: {fileID: 2203396626388179233, guid: a84305d6aad783a4c876520f81b99de5, type: 3}
+  - LargeRock2: {fileID: 7306599527916319746, guid: 274ae84e15a418746805b0c0f772062b, type: 3}
+  - SmallRock1: {instanceID: 0}
+  - SmallRock2: {instanceID: 0}
+  - SmallRock3: {instanceID: 0}
+  - SmallRock4: {instanceID: 0}
+  - Tree1: {instanceID: 0}
+  - Tree2: {instanceID: 0}
+  - Tree3: {instanceID: 0}
+  - Tree4: {instanceID: 0}
+  - Foliage1: {instanceID: 0}
+  - Foliage2: {instanceID: 0}
+  - Foliage3: {instanceID: 0}
+  - GrassPatchLarge: {instanceID: 0}
+  - GrassPatchSmall: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

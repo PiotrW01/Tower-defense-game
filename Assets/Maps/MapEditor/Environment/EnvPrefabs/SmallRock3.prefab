@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4565840395786282246}
   - component: {fileID: 5950279005678113077}
   - component: {fileID: 2670118390426823169}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Small Rock 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,8 +92,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7697119656507599551}
-  - component: {fileID: 2634589585287681435}
-  m_Layer: 0
+  - component: {fileID: -6432064575783765400}
+  - component: {fileID: -683478122270960403}
+  m_Layer: 7
   m_Name: SmallRock3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,29 +117,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &2634589585287681435
-BoxCollider2D:
+--- !u!54 &-6432064575783765400
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6531121087864700793}
-  m_Enabled: 1
-  m_Density: 1
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!65 &-683478122270960403
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6531121087864700793}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.0009624362, y: 0.018285751}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.60933757, y: 0.6923592}
-  m_EdgeRadius: 0
+  m_Size: {x: 0.63622785, y: 0.70534354, z: 0.5336661}
+  m_Center: {x: 0, y: 0.01636979, z: -0.23316696}

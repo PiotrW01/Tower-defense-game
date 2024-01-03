@@ -11,7 +11,7 @@ using UnityEngine.Networking;
 
 public class TestAPI : MonoBehaviour
 {
-    public void Register()
+/*    public void Register()
     {
         if (!NetworkManager.Instance.HasCredentialsSet()) return;
         NetworkManager.Instance.Register();
@@ -38,7 +38,7 @@ public class TestAPI : MonoBehaviour
         data.name = "test000";
 
         NetworkManager.Instance.UploadMap(data);
-    }
+    }*/
 
 
 /*    //add a refresh token too

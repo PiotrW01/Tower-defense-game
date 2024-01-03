@@ -16,12 +16,12 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - pathLayer
+  - Path
   - Water
   - UI
-  - enemyLayer
-  - 
-  - 
+  - Enemy
+  - Structure
+  - Terrain
   - 
   - 
   - 

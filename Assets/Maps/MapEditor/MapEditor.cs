@@ -1,9 +1,14 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using System.Runtime.Serialization.Json;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
+using static NetworkManager;
 
 public class MapEditor : MonoBehaviour
 {
@@ -94,13 +99,6 @@ public class MapEditor : MonoBehaviour
         Enum.TryParse(objectDropdown.options[objectDropdown.value].text, out objectType);
         Debug.Log(objectType);
         GameObject obj = Instantiate(EnvDictionary.Objects[objectType], GameObject.FindGameObjectWithTag("mapEnv").transform);
-        try
-        {
-            obj.GetComponent<BoxCollider2D>().enabled = false;
-        } catch
-        {
-            obj.GetComponent<CircleCollider2D>().enabled = false;
-        }
         ObjectPlacing.envObjectType = objectType;
         Destroy(ObjectPlacing.heldObject);
         ObjectPlacing.heldObject = obj;
@@ -119,14 +117,14 @@ public class MapEditor : MonoBehaviour
         }
     }
 
-    public void SaveMap()
+    public MapData CreateMapData()
     {
         if (NetworkManager.username == "")
         {
             ShowLoginFields();
-            return;
+            return null;
         };
-        if (mapName.text.Length < 3) return;
+        if (mapName.text.Length < 3) return null;
         var shapeController = GameObject.FindGameObjectWithTag("path").GetComponent<SpriteShapeController>().spline;
         var data = new MapData();
         int pointCount = shapeController.GetPointCount();
@@ -155,8 +153,16 @@ public class MapEditor : MonoBehaviour
             data.EnvObjectsType[i] = envObjects[i].GetComponent<ObjectHandler>().objectType;
         }
 
+        return data;
+    }
+
+    public void SaveMapLocally()
+    {
+        MapData data = CreateMapData();
+        if (data == null) return;
         FileManager.SaveMapData(data);
     }
+
     public void GoToMenu()
     {
         SoundManager.Instance.PlayButtonClick();
@@ -178,12 +184,47 @@ public class MapEditor : MonoBehaviour
 
     public void UploadMap()
     {
-        //check if username and password are set
-        //set the mapAuthor to the mapData
+        if (!NetworkManager.HasCredentialsSet())
+        {
+            ShowLoginFields();
+            return;
+        }
+        MapData data = CreateMapData();
+        if(data == null) return;
+        StartCoroutine(UploadMapAsync(data));
     }
 
     public void ShowLoginFields()
     {
         loginCredentials.SetActive(true);
+    }
+
+    IEnumerator UploadMapAsync(MapData mapData)
+    {
+        UploadRequest request = new UploadRequest();
+        request.mapData = mapData;
+        request.username = NetworkManager.username;
+        request.password = NetworkManager.password;
+        string jsonData = JsonUtility.ToJson(request);
+        UnityWebRequest www = CreateJsonRequest("http://localhost:5000/maps/upload", "PUT", jsonData);
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Error: " + www.error);
+        }
+        else
+        {
+            if (www.responseCode == 202) Debug.Log("Map updated!");
+            else if (www.responseCode == 201)
+            {
+                mapData.id = int.Parse(www.downloadHandler.text);
+                Debug.Log("Map created and set map ID as " + mapData.id);
+                FileManager.SaveMapData(mapData);
+            }
+        }
+
+        www.Dispose();
+        yield break;
     }
 }

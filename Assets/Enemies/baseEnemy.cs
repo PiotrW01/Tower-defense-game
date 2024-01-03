@@ -6,8 +6,8 @@ public abstract class baseEnemy : MonoBehaviour
 {
     public float health;
     public float speed;
-    private readonly int droppedMoney;
-    private readonly int damageToPlayer;
+    public int droppedMoney;
+    public int damageToPlayer;
 
     public baseEnemy(float health, float speed, int droppedMoney, int damageToPlayer)
     {
@@ -47,11 +47,6 @@ public abstract class baseEnemy : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (--spawnEnemy.enemiesAlive == 0)
-        {
-            Player.totalWaves++;
-            if (Player.totalWaves == 10) Player.GameOver();
-        }
+        spawnEnemy.enemiesAlive--;
     }
-
 }

@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 318200645144924286}
   - component: {fileID: 318200645144924285}
-  - component: {fileID: 318200645144924287}
   - component: {fileID: 2087551988}
-  - component: {fileID: 2087551989}
+  - component: {fileID: 4139919814569183767}
+  - component: {fileID: 2968081519077940343}
+  - component: {fileID: 4269755457676898380}
+  - component: {fileID: 1025074858890304745}
   m_Layer: 0
   m_Name: GlobalManager
   m_TagString: Untagged
@@ -67,22 +69,6 @@ MonoBehaviour:
   audioSource: {fileID: 318200645682921548}
   musicSource: {fileID: 318200645931204835}
   buttonSource: {fileID: 318200645829172676}
---- !u!114 &318200645144924287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 318200645144924283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6532fdfffc467e24fac7dfa9be9ddecd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maps:
-  - {fileID: 584973042, guid: 7bc32d14047840d4d9ad1a8b626d6081, type: 3}
-  - {fileID: 7760685458207544086, guid: 7c48593dae171dc4ba1ca5fd60230825, type: 3}
-  - {fileID: 7760685458207544086, guid: dfadea0413275194da0a4c28f8289459, type: 3}
 --- !u!114 &2087551988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,7 +83,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultWidth: 1280
   defaultHeight: 720
---- !u!114 &2087551989
+--- !u!114 &4139919814569183767
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,9 +92,83 @@ MonoBehaviour:
   m_GameObject: {fileID: 318200645144924283}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa866a153485493478b42cc2d58bfd2a, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c9e268ae1074e54c9618ad55103ec4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LargeRock1: {fileID: 2203396626388179233, guid: a84305d6aad783a4c876520f81b99de5, type: 3}
+  LargeRock2: {fileID: 7306599527916319746, guid: 274ae84e15a418746805b0c0f772062b, type: 3}
+  SmallRock1: {fileID: 0}
+  SmallRock2: {fileID: 0}
+  SmallRock3: {fileID: 0}
+  SmallRock4: {fileID: 0}
+  Tree1: {fileID: 0}
+  Tree2: {fileID: 0}
+  Tree3: {fileID: 0}
+  Tree4: {fileID: 0}
+  Foliage1: {fileID: 0}
+  Foliage2: {fileID: 0}
+  Foliage3: {fileID: 0}
+  GrassPatchLarge: {fileID: 0}
+  GrassPatchSmall: {fileID: 0}
+--- !u!114 &2968081519077940343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318200645144924283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 605c521739681db41acda42ec114e061, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Asphalt: {fileID: 0}
+  BeachRocks: {fileID: 0}
+  Concrete: {fileID: 0}
+  CrackedSoil: {fileID: 0}
+  Gravel: {fileID: 0}
+  MixedSnow: {fileID: 0}
+  RockyGround: {fileID: 0}
+  RockySand: {fileID: 0}
+  RoughRock: {fileID: 0}
+  RustyMetal: {fileID: 0}
+  SnowyRock: {fileID: 0}
+--- !u!114 &4269755457676898380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318200645144924283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07a7f243ee6cf2047848f58531d15119, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  APC_B1: {fileID: 0}
+  APC_B2: {fileID: 0}
+  APC_PLAZ1: {fileID: 0}
+  APC_PLAZ2: {fileID: 0}
+  BAGI_B1: {fileID: 0}
+  BAGI_ROCKET1: {fileID: 0}
+--- !u!114 &1025074858890304745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318200645144924283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 055d84ffed68cef43b8971d872759aa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Building1: {fileID: 3445561663977872858, guid: 9aec38b7b7de6b84187f6146900ec718, type: 3}
+  Building2: {fileID: 3445561663977872858, guid: f45e1b9be44ebd34199950f433cfdc1a, type: 3}
+  Turret1: {fileID: 0}
+  Turret2: {fileID: 0}
+  Turret3: {fileID: 0}
+  Turret4: {fileID: 0}
 --- !u!1 &318200645682921547
 GameObject:
   m_ObjectHideFlags: 0

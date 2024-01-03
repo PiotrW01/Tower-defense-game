@@ -33,6 +33,12 @@ public class MapPreview : MonoBehaviour, ISelectHandler
             SceneManager.LoadScene("mapEditor");
         });
 
+        playButton.onClick.AddListener(() =>
+        {
+            ChosenMapData = mapData;
+            SceneManager.LoadScene("game");
+        });
+
         deleteHandler = deleteButton.gameObject.AddComponent<ButtonDeselectHandler>();
         deleteButton.onClick.AddListener(() =>
         {

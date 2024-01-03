@@ -529,7 +529,7 @@ PrefabInstance:
       objectReference: {fileID: 320031614}
     - target: {fileID: 6876690670415803528, guid: 5213a71fd446a584e9c4519110ceea58, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SaveMap
+      value: SaveMapLocally
       objectReference: {fileID: 0}
     - target: {fileID: 6876690670415803528, guid: 5213a71fd446a584e9c4519110ceea58, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

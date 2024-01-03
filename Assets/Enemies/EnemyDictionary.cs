@@ -6,9 +6,10 @@ public class EnemyDictionary : MonoBehaviour
     public static Dictionary<Enemy, GameObject> Enemies;
     public GameObject APC_B1;
     public GameObject APC_B2;
-    public GameObject APC_B3;
-    public GameObject APC_B4;
-    public GameObject APC_BOSS;
+    public GameObject APC_PLAZ1;
+    public GameObject APC_PLAZ2;
+    public GameObject BAGI_B1;
+    public GameObject BAGI_ROCKET1;
 
     // Start is called before the first frame update
     void Awake()
@@ -17,9 +18,10 @@ public class EnemyDictionary : MonoBehaviour
         {
             {Enemy.APC_B1, APC_B1},
             {Enemy.APC_B2, APC_B2},
-            {Enemy.APC_B3, APC_B3},
-            {Enemy.APC_B4, APC_B4},
-            {Enemy.APC_BOSS, APC_BOSS},
+            {Enemy.APC_PLAZ1, APC_PLAZ1},
+            {Enemy.APC_PLAZ2, APC_PLAZ2},
+            {Enemy.BAGI_B1, BAGI_B1},
+            {Enemy.BAGI_ROCKET1, BAGI_ROCKET1 },
         };
     }
 
@@ -39,7 +41,8 @@ public enum Enemy
 {
     APC_B1,
     APC_B2,
-    APC_B3,
-    APC_B4,
-    APC_BOSS,
+    APC_PLAZ1,
+    APC_PLAZ2,
+    BAGI_B1,
+    BAGI_ROCKET1,
 }
