@@ -30,12 +30,14 @@ public class TimeControl : MonoBehaviour
 
     void Update()
     {
+        if (!Player.isAlive) return;
+
         if (Input.GetKeyDown(KeyCode.G))
         {
             changeTimeSpeed();
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape) && !CreateTurret.isPlacing) 
+        if(Input.GetKeyDown(KeyCode.Escape) && !PurchaseManager.isPlacing) 
         {
             if (!gamePaused) 
             {

@@ -33,10 +33,18 @@ public class MapLoader : MonoBehaviour
         terrainSprite.size = data.size;
         terrainSprite.sprite = TerrainDictionary.Sprites[data.terrainType];
 
-
-        if(SceneManager.GetActiveScene().name == "game")
+        // GAMEPLAY 2D TO 3D
+        if(SceneManager.GetActiveScene().name == "game") // gameplay
         {
             terrainSprite.GetComponent<BoxCollider>().size = new Vector3(terrainSprite.size.x, terrainSprite.size.y, 0.2f);
+            var outsideTerrain = Instantiate(terrainSprite.gameObject, terrainSprite.transform.parent)
+                                .GetComponent<SpriteRenderer>();
+            outsideTerrain.transform.localPosition = new Vector3(0f, 0f, 0.05f);
+            outsideTerrain.size = terrainSprite.size * 4;
+            outsideTerrain.sprite = terrainSprite.sprite;
+            outsideTerrain.color = new Color(0.7f, 0.7f, 0.7f);
+            Destroy(outsideTerrain.GetComponent<BoxCollider>());
+
             // Instantiate Environment objects
             var envContainer = transform.Find("Environment");
             for (int i = 0; i < data.EnvObjectsPos.Length; i++)
@@ -47,8 +55,10 @@ public class MapLoader : MonoBehaviour
             path.GetComponent<PathShapeController>().enabled = false;
             path.GetComponent<EdgeCollider2D>().enabled = true;
             path.GetComponent<Waypoints>().enabled = true;
+
+
         }
-        else
+        else // editor
         {
             // Instantiate Environment objects
             var envContainer = transform.Find("Environment");

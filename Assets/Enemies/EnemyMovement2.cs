@@ -8,7 +8,7 @@ public class EnemyMovement2 : MonoBehaviour
     private readonly float turnSpeed = 5f;
 
     private float targetY;
-    private Vector3 target; // The next point on the path the enemy needs to reach
+    private Vector3 targetPosition; // The next point on the path the enemy needs to reach
 
     public int waypointIndex = 1; // The index of the current waypoint in the path
     public float distance;
@@ -17,33 +17,30 @@ public class EnemyMovement2 : MonoBehaviour
     void Start()
     {
         speed = gameObject.GetComponent<baseEnemy>().GetSpeed();
-        target = new Vector3(Waypoints.waypoints[1].x, 0.2f, Waypoints.waypoints[1].y); // Set the target to the first waypoint
-        //transform.LookAt(target);
-        //transform.Rotate(new Vector3(0, 90, 0));
-        Vector3 targetDirection = new Vector3(target.x, target.y, target.z) - transform.position;
-        targetY = Mathf.Atan2(targetDirection.z, targetDirection.x) * Mathf.Rad2Deg;
-        Quaternion targetRotation = Quaternion.Euler(0f, targetY + 90, 0f);
+        targetPosition = new Vector3(Waypoints.waypoints[1].x, 0.2f, Waypoints.waypoints[1].y);
+
+        Vector3 targetDirection = targetPosition - transform.position;
+        targetY = Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg;
+        Quaternion targetRotation = Quaternion.Euler(0f, targetY, 0f);
         transform.rotation = targetRotation;
-        distance = Vector3.Distance(gameObject.transform.position, target);
+        distance = Vector3.Distance(gameObject.transform.position, targetPosition);
     }
 
     private void Update()
     {
         // Move the enemy towards the target waypoint
-        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
         // Calculate the remaining distance between enemy and target waypoint
-        distance = Vector3.Distance(gameObject.transform.position, target);
+        distance = Vector3.Distance(gameObject.transform.position, targetPosition);
 
         // If the enemy has reached the target waypoint, set the next target waypoint
-        if (Vector3.Distance(transform.position, target) < 0.001f)
+        if (Vector3.Distance(transform.position, targetPosition) < 0.001f)
         {
             SetNextTarget();
         }
 
-        Vector3 targetDirection = new Vector3(target.x, target.y, target.z) - transform.position;
+        Vector3 targetDirection = targetPosition - transform.position;
         RotateToTarget(targetDirection);
-
-
     }
 
     private void SetNextTarget()
@@ -51,7 +48,7 @@ public class EnemyMovement2 : MonoBehaviour
         waypointIndex++;
         if (waypointIndex < Waypoints.waypoints.Length)
         {
-            target = new Vector3(Waypoints.waypoints[waypointIndex].x, 0.2f, Waypoints.waypoints[waypointIndex].y);
+            targetPosition = new Vector3(Waypoints.waypoints[waypointIndex].x, 0.2f, Waypoints.waypoints[waypointIndex].y);
         }
         else
         {

@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 906709691548583384}
   - component: {fileID: 8009237861213964930}
   - component: {fileID: 6382489927480676788}
+  - component: {fileID: -2081961181848801427}
+  - component: {fileID: 6874479988622598792}
   m_Layer: 7
   m_Name: Building1
   m_TagString: Untagged
@@ -29,7 +31,7 @@ RectTransform:
   m_GameObject: {fileID: 3445561663977872858}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.16, y: 0.16, z: 0.16}
+  m_LocalScale: {x: 0.14, y: 0.14, z: 0.14}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7549907605352947570}
@@ -91,6 +93,30 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 19.454193, y: 5.0237656, z: 18.632137}
   m_Center: {x: 0.0541687, y: -0.8196831, z: 0.004298985}
+--- !u!114 &-2081961181848801427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3445561663977872858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aadcdb9361be47b40bda7e9dab24d283, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6874479988622598792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3445561663977872858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad1d38f334f3ab247895b7a5f4943a22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7549907605352809970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -120,7 +146,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 6a1a639220687694daddb25c169f98be, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 6a1a639220687694daddb25c169f98be, type: 3}
       propertyPath: m_LocalPosition.z
@@ -152,6 +178,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 6a1a639220687694daddb25c169f98be, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 6a1a639220687694daddb25c169f98be, type: 3}
+      propertyPath: m_SortingLayer
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

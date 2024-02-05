@@ -1,22 +1,31 @@
 using System.Collections;
+using System.Net.Cache;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class NetworkManager : MonoBehaviour
 {
-    //username1 password1
+    //change class name to Networking
     public static string username = "";
     public static string password = "";
 
     public TMP_InputField usernameField;
     public TMP_InputField passwordField;
     public TextMeshProUGUI confirmField;
+    public TextMeshProUGUI responseField;
 
-    // porozdzielac korutyny do odpowiednich skryptow zamiast w tym jednym
+    public void Start()
+    {
+        if (username != "") usernameField.text = username;
+        if (password != "") passwordField.text = password;
+    }
+
     IEnumerator RegisterAsync()
     {
-        RegisterRequest request = new RegisterRequest(username, password);
+        RegisterRequest request = new RegisterRequest();
+        request.username = usernameField.text;
+        request.password = passwordField.text;
         string jsonData = JsonUtility.ToJson(request);
         UnityWebRequest www = CreateJsonRequest("http://localhost:5000/auth/register", "POST", jsonData);
         yield return www.SendWebRequest();
@@ -28,160 +37,55 @@ public class NetworkManager : MonoBehaviour
         else
         {
             Debug.Log(www.responseCode);
+            if (www.responseCode == 201)
+            {
+                responseField.text = "Account successfully created!";
+                username = usernameField.text;
+                password = passwordField.text;
+            } else
+            {
+                responseField.text = "Failed to create an account";
+            }
         }
 
         www.Dispose();
         yield break;
     }
 
-    /*    // top 10
-        IEnumerator GetHighscoresAsync(int mapID)
+    public void RegisterUser()
+    {
+        if(!AreInputsValid())
         {
-            string jsonData = "{\"mapID\":\"" + mapID + "\"}";
-            var www = CreateJsonRequest("http://localhost:5000/scores/", "GET", jsonData);
-            yield return www.SendWebRequest();
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.Log("Error: " + www.error);
-            }
-            else
-            {
-                ScoresRequest request = JsonUtility.FromJson<ScoresRequest>(www.downloadHandler.text);
-                foreach (var score in request.scores)
-                {
-                    Debug.Log(score.username + score.totalScore);
-                }
-            }
-
-            www.Dispose();
-            yield break;
+            responseField.text = "Not all credentials meet the requirements!";
+            return;
         }
-
-        // top 10, top 20...
-        IEnumerator GetLatestMapsAsync(int page)
-        {
-            var www = CreateJsonRequest("http://localhost:5000/maps/" + page, "GET", "");
-            yield return www.SendWebRequest();
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.Log("Error: " + www.error);
-            }
-            else
-            {
-                Debug.Log(www.downloadHandler.text);
-                MapsRequest req = JsonUtility.FromJson<MapsRequest>(www.downloadHandler.text);
-                foreach (var data in req.maps)
-                {
-                    var t = JsonUtility.FromJson<MapData>(data.jsonMapData);
-                    Debug.Log(t.id = data.mapID);
-                }
-            }
-
-            www.Dispose();
-            yield break;
-        }
-
-        IEnumerator UploadScoreAsync(int mapID, int score)
-        {
-            UploadRequest request = new UploadRequest();
-            request.username = username;
-            request.password = password;
-            request.mapID = mapID;
-            request.score = score;
-            string jsonData = JsonUtility.ToJson(request);
-
-            UnityWebRequest www = CreateJsonRequest("http://localhost:5000/scores/upload", "PUT", jsonData);
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.Log("Error: " + www.error);
-            }
-            else
-            {
-                Debug.Log(www.responseCode);
-            }
-
-            www.Dispose();
-            yield break;
-        }
-
-        IEnumerator UploadMapAsync(MapData mapData)
-        {
-            // get back mapID and set it
-            UploadRequest request = new UploadRequest();
-            request.mapData = mapData;
-            request.username = username;
-            request.password = password;
-            string jsonData = JsonUtility.ToJson(request);
-
-            UnityWebRequest www = CreateJsonRequest("http://localhost:5000/maps/upload", "PUT", jsonData);
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.Log("Error: " + www.error);
-            }
-            else
-            {
-                Debug.Log(www.downloadHandler.text);
-            }
-
-            www.Dispose();
-            yield break;
-        }
-
-        public void UploadMap(MapData mapData)
-        {
-            StartCoroutine(UploadMapAsync(mapData));
-        }
-
-        public void Register()
-        {
-            StartCoroutine(RegisterAsync());
-        }
-
-        public void GetHighscores(int mapID)
-        {
-            StartCoroutine(GetHighscoresAsync(mapID));
-        }
-        public void GetLatestMaps(int page)
-        {
-            StartCoroutine(GetLatestMapsAsync(page));
-        }
-
-        public void UploadScore(int mapID, int score)
-        {
-            StartCoroutine(UploadScoreAsync(mapID, score));
-        }
-
-        public static void SetUsername(string newUsername)
-        {
-            username = newUsername;
-        }
-
-        public static void SetPassword(string newPassword)
-        {
-            password = newPassword;
-        }
-
-        public bool HasCredentialsSet()
-        {
-            if (username != "" && password != "") return true;
-            return false;
-        }*/
+        StartCoroutine(RegisterAsync());
+    }
 
     public static bool HasCredentialsSet()
     {
         if (username != "" && password != "") return true;
         return false;
     }
+
+    public bool AreInputsValid()
+    {
+        if (passwordField.text.Length < 5) return false;
+        if (usernameField.text.Length < 3) return false;
+        return true;
+    }
+
     public void SetCredentials()
     {
+        if (!AreInputsValid())
+        {
+            responseField.text = "Not all credentials meet the requirements!";
+            return;
+        }
         username = usernameField.text;
         password = passwordField.text;
         Debug.Log(username + password);
-        confirmField.text = "Saved!";
+        responseField.text = "Saved Credentials!";
     }
 
 
@@ -225,12 +129,6 @@ public class NetworkManager : MonoBehaviour
 
     public class RegisterRequest
     {
-        public RegisterRequest(string username, string password)
-        {
-            this.username=username;
-            this.password=password;
-        }
-
         public string username;
         public string password;
     }

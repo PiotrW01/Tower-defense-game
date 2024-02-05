@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8663649844875390633}
   - component: {fileID: 1995167164700154769}
-  - component: {fileID: 350197342098841524}
   - component: {fileID: 2003388299377235780}
   - component: {fileID: 6374065451805015823}
+  - component: {fileID: 7561021694516778140}
   m_Layer: 6
   m_Name: APCB2
   m_TagString: Untagged
@@ -52,20 +52,6 @@ MonoBehaviour:
   speed: 16.4
   droppedMoney: 4
   damageToPlayer: 1
---- !u!114 &350197342098841524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8684251159672823020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dae1779a09c48a4448b111584a58706f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waypointIndex: 1
-  distance: 0
 --- !u!54 &2003388299377235780
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -81,7 +67,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 126
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &6374065451805015823
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -90,11 +76,25 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8684251159672823020}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 3.242841, y: 2.5771258, z: 8.006602}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7561021694516778140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8684251159672823020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306a49d8840955f47b1f72b8c01c9863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypointIndex: 1
+  distance: 0
 --- !u!1001 &5746794015810335488
 PrefabInstance:
   m_ObjectHideFlags: 0

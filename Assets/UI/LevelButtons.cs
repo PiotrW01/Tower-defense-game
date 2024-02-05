@@ -37,4 +37,8 @@ public class LevelButtons : MonoBehaviour
         GameObject.Find("OptionsInterface").gameObject.SetActive(false);
     }
 
+    public void UploadScore()
+    {
+
+    }
 }

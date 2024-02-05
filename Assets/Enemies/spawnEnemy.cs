@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using TMPro;
 using UnityEngine;
 
@@ -9,31 +12,21 @@ public class spawnEnemy : MonoBehaviour
 
     public int waveNumber = 0;
     public bool isSpawning = false;
-    private Waves waveManager;
+    private WaveManager waveManager;
     public TextMeshProUGUI waveNumberText;
 
-    private class EnemyWave
+    private class WaveManager
     {
-        // enemyType, enemyAmount, enemySpawnDelay
-        public int[,] enemyWavesinWave;
+        public List<Wave> waves;
 
-        public EnemyWave(int enemyWavesinWaveAmount)
+        public WaveManager(int maxWaves)
         {
-            enemyWavesinWave = new int[enemyWavesinWaveAmount,3];
-        }
-    }
-    private class Waves
-    {
-        public Wave[] waves;
-
-        public Waves(int maxWaves)
-        {
-            waves = new Wave[maxWaves];
+            waves = new(maxWaves);
         }
 
         public void Init()
         {
-            for (int i = 0; i < waves.Length; i++)
+            for (int i = 0; i < waves.Count; i++)
             {
                 waves[i] = new Wave();
             }
@@ -41,8 +34,15 @@ public class spawnEnemy : MonoBehaviour
 
         public void AddInWave(int waveNumber, InWave inWave)
         {
+            if (waves.Count == waveNumber) waves.Add(new Wave());
             waves[waveNumber].inWaves.Add(inWave);
         }
+
+        public void AddWave()
+        {
+            waves.Add(new Wave());
+        }
+
         public int GetInWaveAmount(int waveNumber)
         {
             return waves[waveNumber].inWaves.Count;
@@ -79,11 +79,25 @@ public class spawnEnemy : MonoBehaviour
 
     private void Start()
     {
-        waveManager = new Waves(20);
+        waveManager = new WaveManager(20);
         waveManager.Init();
-        waveManager.AddInWave(0, new InWave(Enemy.APC_B1, 20, 2));
-        waveManager.AddInWave(0, new InWave(Enemy.APC_B1, 10, 1));
+        waveManager.AddInWave(0, new InWave(Enemy.APC_B1, 4, 2));
+        waveManager.AddInWave(0, new InWave(Enemy.APC_B1, 0, 1));
+
+/*        waveManager.AddInWave(1, new InWave(Enemy.APC_B2, 10, 0.5f));
         waveManager.AddInWave(1, new InWave(Enemy.APC_B2, 10, 0.5f));
+
+        waveManager.AddInWave(2, new InWave(Enemy.APC_B2, 10, 0.3f));
+        waveManager.AddInWave(2, new InWave(Enemy.APC_B2, 10, 0.3f));
+
+        waveManager.AddInWave(3, new InWave(Enemy.APC_B2, 10, 0.3f));
+        waveManager.AddInWave(3, new InWave(Enemy.APC_B2, 10, 0.3f));
+
+        waveManager.AddInWave(4, new InWave(Enemy.APC_B2, 10, 0.3f));
+        waveManager.AddInWave(4, new InWave(Enemy.APC_B2, 10, 0.3f));
+
+        waveManager.AddInWave(5, new InWave(Enemy.APC_B2, 10, 0.3f));
+        waveManager.AddInWave(5, new InWave(Enemy.APC_B2, 10, 0.3f));*/
     }
     private void Update()
     {
@@ -94,11 +108,67 @@ public class spawnEnemy : MonoBehaviour
     }
     public void SpawnWave() 
     {
-        if (waveManager.waves[waveNumber] == null || isSpawning || enemiesAlive != 0) return;
+        if (isSpawning || enemiesAlive != 0) return;
+        if(waveManager.waves.Count == waveNumber)
+        {
+            GenerateNextWave();
+        }
         SoundManager.Instance.PlayButtonClick();
         waveNumberText.text = "Wave " + (waveNumber + 1).ToString();
-        StartCoroutine(SpawnEnemies(waveNumber++));
+        StartCoroutine(SpawnEnemies(waveNumber));
+        waveNumber++;
     }
+
+    public void GenerateNextWave()
+    {
+        List<Enemy> elements = new List<Enemy> { Enemy.APC_B1, Enemy.APC_B2, Enemy.BAGI_ROCKET1 };
+        float difficulty = Mathf.Clamp((float)waveNumber / 2, 0.1f, 999);
+        List<float> chances = new List<float> 
+        {   
+            5,
+            5 * difficulty,
+            5 * difficulty * 2,
+        };
+
+        var inWaveCount = new System.Random(waveNumber).Next(2,5);
+        waveManager.AddWave();
+
+        for (int i = 0; i < inWaveCount; i++)
+        {
+            var rand = new System.Random(waveNumber + i);
+            Enemy selectedEnemy = WeightedRandomPick(elements, chances, rand.Next());
+            int enemyAmount = rand.Next(5, 20);
+            float spawnDelay = Mathf.Lerp(0.2f, 2.0f, (float)rand.NextDouble());
+            InWave inWave = new InWave(selectedEnemy, enemyAmount, spawnDelay);
+            waveManager.AddInWave(waveNumber, inWave);
+        }
+    }
+
+    static T WeightedRandomPick<T>(List<T> elements, List<float> chances, int seed)
+    {
+        if (elements.Count != chances.Count)
+        {
+            throw new ArgumentException("The number of elements must be equal to the number of chances.");
+        }
+
+        float totalWeight = chances.Sum();
+        double randomValue = new System.Random(seed).NextDouble() * totalWeight;
+        Debug.Log(totalWeight);
+        Debug.Log(randomValue);
+        Debug.Log("");
+        for (int i = 0; i < elements.Count; i++)
+        {
+            randomValue -= chances[i];
+            if (randomValue <= 0)
+            {
+                return elements[i];
+            }
+        }
+
+        throw new InvalidOperationException("Weighted random selection failed.");
+    }
+
+
     IEnumerator SpawnEnemies(int waveNumber)
     {
         isSpawning = true;

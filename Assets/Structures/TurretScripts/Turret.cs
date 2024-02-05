@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
+using static StructureDictionary;
 
 public class Turret : MonoBehaviour
 {
@@ -19,8 +18,9 @@ public class Turret : MonoBehaviour
     public int radiusUpgradeMultiplier = 1;
     public int maxUpgradeLevel = 3;
     public int currentLevel = 0;
-    //add bullets array for pooling
-    private readonly List<EnemyMovement2> enemyDistanceList = new();
+
+    private List<EnemyMovement2> enemyDistanceList = new();
+    private List<GameObject> bulletPool;
     private Transform closestEnemy;
     private Collider[] enemiesInRange;
     public GameObject radius;
@@ -30,13 +30,8 @@ public class Turret : MonoBehaviour
         mask = LayerMask.GetMask("Enemy");
         attackRadius *= transform.localScale.x;
         radius = Instantiate(radius, transform);
-        
     }
 
-    private void Start()
-    {
-        EnableTurret();
-    }
     private void Update()
     {
         radius.transform.localScale = new Vector3(attackRadius * 2, attackRadius * 2, attackRadius * 2);
@@ -51,6 +46,7 @@ public class Turret : MonoBehaviour
             canon.rotation = Quaternion.Euler(0f, yRot, 0f);
         }
     }
+
 
 
 
@@ -91,18 +87,27 @@ public class Turret : MonoBehaviour
     }
     private void FireBullet(Transform target)
     {
-        GameObject bullet = Instantiate(BulletPrefab, gameObject.transform);
+        GameObject bullet = GetPooledBullet();
+        if(bullet == null) return;
         bullet.GetComponent<BaseBullet>().enemy = target.gameObject;
         if (isDoubleBarrel)
         {
 
         } else
         {
-            bullet.transform.localPosition = new Vector3(0, 0.72f, 0f);
+            bullet.transform.localPosition = new Vector3(0, 0.62f, 0f);
         }
+
+        bullet.SetActive(true);
     }
-
-
+    public void ToggleTurretRadius()
+    {
+        if (radius.activeInHierarchy)
+        {
+            radius.SetActive(false);
+        }
+        else radius.SetActive(true);
+    }
     private bool CanUpgrade()
     {
         if (Player.CanBuy(upgradeCost) && currentLevel <= maxUpgradeLevel)
@@ -120,19 +125,39 @@ public class Turret : MonoBehaviour
             upgradeCost = (int)(upgradeCost * 1.5f);
         }
     }
-
     public void RemoveTurret()
     {
         Destroy(gameObject);
         Player.AddMoney(120);
     }
-
     public void EnableTurret()
     {
+        bulletPool = new();
+        GameObject obj;
+        float bulletAliveTime = BulletPrefab.GetComponent<BaseBullet>().aliveTime;
+        int maxBullets = (int)(bulletAliveTime * (1 / cooldownTime)) + 1;
+
+        for (int i = 0; i < maxBullets; i++)
+        {
+            obj = Instantiate(BulletPrefab, transform);
+            obj.SetActive(false);
+            bulletPool.Add(obj);
+        }
 
         StartCoroutine(Shoot());
     }
 
+    public GameObject GetPooledBullet()
+    {
+        for (int i = 0; i < bulletPool.Count; i++)
+        {
+            if (!bulletPool[i].activeInHierarchy)
+            {
+                return bulletPool[i];
+            }
+        }
+        return null;
+    }
     IEnumerator Shoot()
     {
         while (true)

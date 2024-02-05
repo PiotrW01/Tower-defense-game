@@ -54,7 +54,6 @@ public class ShowUpgrades : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void ReAddSigns()
     {
-        // Fix adding signs after button press even when player can't buy upgrade
         OnPointerEnter(null);
     }
 

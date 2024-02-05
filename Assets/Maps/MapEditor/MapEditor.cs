@@ -119,11 +119,6 @@ public class MapEditor : MonoBehaviour
 
     public MapData CreateMapData()
     {
-        if (NetworkManager.username == "")
-        {
-            ShowLoginFields();
-            return null;
-        };
         if (mapName.text.Length < 3) return null;
         var shapeController = GameObject.FindGameObjectWithTag("path").GetComponent<SpriteShapeController>().spline;
         var data = new MapData();
@@ -190,7 +185,7 @@ public class MapEditor : MonoBehaviour
             return;
         }
         MapData data = CreateMapData();
-        if(data == null) return;
+        if(data == null || data.mapAuthor == "") return;
         StartCoroutine(UploadMapAsync(data));
     }
 

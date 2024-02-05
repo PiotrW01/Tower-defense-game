@@ -49,7 +49,7 @@ public class GameCameraControl : MonoBehaviour
         if (Input.GetKey(KeyCode.A)) move.x--;
         if (Input.GetKey(KeyCode.S)) move.z--;
         if (Input.GetKey(KeyCode.D)) move.x++;
-        Camera.main.transform.position += move * cameraSpeed * Time.deltaTime;
+        if (Time.timeScale != 0) Camera.main.transform.position += move * cameraSpeed * Time.deltaTime / Time.timeScale;
     }
     public void ClampCamera()
     {

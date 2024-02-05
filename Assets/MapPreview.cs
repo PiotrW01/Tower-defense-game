@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MapPreview : MonoBehaviour, ISelectHandler
+public class MapPreview : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
     public static MapData ChosenMapData;
     public MapData mapData;
@@ -13,14 +13,7 @@ public class MapPreview : MonoBehaviour, ISelectHandler
     public Button editButton;
     public Button playButton;
     public Button deleteButton;
-    private ButtonDeselectHandler deleteHandler;
-
-
-    public void OnSelect(BaseEventData eventData)
-    {
-        //get highscores
-        throw new System.NotImplementedException();
-    }
+    private bool isDeleteConfirmed = false;
 
     void Start()
     {
@@ -39,28 +32,25 @@ public class MapPreview : MonoBehaviour, ISelectHandler
             SceneManager.LoadScene("game");
         });
 
-        deleteHandler = deleteButton.gameObject.AddComponent<ButtonDeselectHandler>();
         deleteButton.onClick.AddListener(() =>
         {
-            if (!deleteHandler.isDeleteConfirmed)
+            if (isDeleteConfirmed)
             {
-                deleteHandler.isDeleteConfirmed = true;
+                isDeleteConfirmed = true;
                 return;
             } 
             FileManager.DeleteMapData(mapData.mapAuthor, mapData.name);
             Destroy(gameObject);
         });
-        
     }
 
-    private class ButtonDeselectHandler : MonoBehaviour, IDeselectHandler
-    {   
-        public bool isDeleteConfirmed = false;
+    public void OnSelect(BaseEventData eventData)
+    {
+        GameObject.Find("HighScores").GetComponent<Highscores>().LoadScores(mapData.id);
+    }
 
-
-        public void OnDeselect(BaseEventData eventData)
-        {
-            isDeleteConfirmed = false;
-        }
+    public void OnDeselect(BaseEventData eventData)
+    {
+        isDeleteConfirmed = false;
     }
 }

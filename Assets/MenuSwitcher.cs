@@ -8,6 +8,13 @@ public class MenuSwitcher : MonoBehaviour
     public GameObject LocalMapsMenu;
     public GameObject DownloadMapsMenu;
 
+    private void Start()
+    {
+        MainMenu.SetActive(true);
+        LocalMapsMenu.SetActive(false);
+        DownloadMapsMenu.SetActive(false);
+    }
+
     public void ReturnToMain()
     {
         MainMenu.SetActive(true);

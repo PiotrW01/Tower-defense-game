@@ -51,7 +51,6 @@ public class DownloadMapBrowser : MonoBehaviour
         }
         else
         {
-            Debug.Log(www.downloadHandler.text);
             MapsRequest req = JsonUtility.FromJson<MapsRequest>(www.downloadHandler.text);
             foreach (var data in req.maps)
             {
