@@ -1,24 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using static StructureDictionary;
 
 public class Turret : MonoBehaviour
 {
-    private LayerMask mask;
     public GameObject BulletPrefab;
-    public bool isDoubleBarrel = true;
-    public float damageMultiplier = 1f;
     public float attackRadius;
-    public float cooldownTime;
+    public float cooldown;
     public int upgradeCost;
-    public int dmgUpgradeMultiplier = 1;
-    public int cooldownUpgradeMultiplier = 1;
-    public int radiusUpgradeMultiplier = 1;
-    public int maxUpgradeLevel = 3;
+    public float damageMultiplier = 2f;
+    public float cooldownMultiplier = 1.2f;
+    public float radiusMultiplier = 1.2f;
+    public int maxLevel = 3;
     public int currentLevel = 0;
 
+    private new Animation animation;
     private List<EnemyMovement2> enemyDistanceList = new();
     private List<GameObject> bulletPool;
     private Transform closestEnemy;
@@ -27,31 +23,24 @@ public class Turret : MonoBehaviour
 
     private void Awake()
     {
-        mask = LayerMask.GetMask("Enemy");
+        animation = GetComponentInChildren<Animation>();
+        animation[animation.clip.name].speed = 1 / cooldown;
         attackRadius *= transform.localScale.x;
         radius = Instantiate(radius, transform);
+        radius.transform.localScale = new Vector3(attackRadius * 2, attackRadius * 2, attackRadius * 2);
     }
 
     private void Update()
     {
-        radius.transform.localScale = new Vector3(attackRadius * 2, attackRadius * 2, attackRadius * 2);
-        if (!Player.isAlive) return;
-        enemiesInRange = Physics.OverlapSphere(transform.position, attackRadius, mask);
-        if(enemiesInRange.Length != 0)
-        {
-            closestEnemy = FindClosestEnemy(enemiesInRange);
-            Transform canon = transform.Find("Canon");
-            canon.LookAt(closestEnemy);
-            float yRot = canon.transform.eulerAngles.y;
-            canon.rotation = Quaternion.Euler(0f, yRot, 0f);
-        }
+        if (closestEnemy == null) return;
+        transform.LookAt(closestEnemy);
+        float yRot = transform.eulerAngles.y;
+        transform.rotation = Quaternion.Euler(0f, yRot, 0f);
     }
-
-
-
 
     private Transform FindClosestEnemy(Collider[] enemiesInRange)
     {
+        if(enemiesInRange.Length == 0) return null;
         foreach (var enemy in enemiesInRange)
         {
             enemy.TryGetComponent(out EnemyMovement2 enemyMovementComponent);
@@ -90,14 +79,10 @@ public class Turret : MonoBehaviour
         GameObject bullet = GetPooledBullet();
         if(bullet == null) return;
         bullet.GetComponent<BaseBullet>().enemy = target.gameObject;
-        if (isDoubleBarrel)
-        {
+        bullet.GetComponent<BaseBullet>().damage *= damageMultiplier;
+        bullet.transform.localPosition = new Vector3(0, 0.62f, 0f);
 
-        } else
-        {
-            bullet.transform.localPosition = new Vector3(0, 0.62f, 0f);
-        }
-
+        animation.Play();
         bullet.SetActive(true);
     }
     public void ToggleTurretRadius()
@@ -106,11 +91,15 @@ public class Turret : MonoBehaviour
         {
             radius.SetActive(false);
         }
-        else radius.SetActive(true);
+        else
+        {
+            radius.SetActive(true);
+            radius.transform.localScale = new Vector3(attackRadius * 2, attackRadius * 2, attackRadius * 2);
+        }
     }
     private bool CanUpgrade()
     {
-        if (Player.CanBuy(upgradeCost) && currentLevel <= maxUpgradeLevel)
+        if (Player.CanBuy(upgradeCost) && currentLevel < maxLevel)
         {
             return true;
         }
@@ -123,19 +112,19 @@ public class Turret : MonoBehaviour
             currentLevel++;
             Player.Buy(upgradeCost);
             upgradeCost = (int)(upgradeCost * 1.5f);
+            attackRadius = attackRadius * radiusMultiplier;
+            cooldown = cooldown / cooldownMultiplier;
+            damageMultiplier *= 1.2f;
+            animation[animation.clip.name].speed = 1 / cooldown;
+            ResizeBulletPool();
         }
-    }
-    public void RemoveTurret()
-    {
-        Destroy(gameObject);
-        Player.AddMoney(120);
     }
     public void EnableTurret()
     {
         bulletPool = new();
         GameObject obj;
         float bulletAliveTime = BulletPrefab.GetComponent<BaseBullet>().aliveTime;
-        int maxBullets = (int)(bulletAliveTime * (1 / cooldownTime)) + 1;
+        int maxBullets = (int)(bulletAliveTime * (1 / cooldown)) + 1;
 
         for (int i = 0; i < maxBullets; i++)
         {
@@ -160,15 +149,39 @@ public class Turret : MonoBehaviour
     }
     IEnumerator Shoot()
     {
-        while (true)
+        LayerMask mask = LayerMask.GetMask("Enemy");
+        while (Player.isAlive)
         {
-            if (!Player.isAlive) yield break;
+            enemiesInRange = Physics.OverlapSphere(transform.position, attackRadius, mask);
+            closestEnemy = FindClosestEnemy(enemiesInRange);
+
             if (closestEnemy != null)
             {
                 FireBullet(closestEnemy);
-                yield return new WaitForSeconds(cooldownTime);
+                yield return new WaitForSeconds(cooldown);
             }
             yield return null;
         }
+    }
+
+    private void ResizeBulletPool()
+    {
+        float bulletAliveTime = BulletPrefab.GetComponent<BaseBullet>().aliveTime;
+        int maxBullets = (int)(bulletAliveTime * (1 / cooldown)) + 1;
+        if (maxBullets <= bulletPool.Count) return;
+        GameObject obj;
+
+        for (int i = bulletPool.Count; i < maxBullets; i++)
+        {
+            obj = Instantiate(BulletPrefab, transform);
+            obj.SetActive(false);
+            bulletPool.Add(obj);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (gameObject.GetComponent<placeDetection>()) return;
+        Player.AddMoney(100);
     }
 }

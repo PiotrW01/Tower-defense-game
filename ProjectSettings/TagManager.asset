@@ -12,6 +12,8 @@ TagManager:
   - UI
   - map
   - mapEnv
+  - turret
+  - building
   layers:
   - Default
   - TransparentFX

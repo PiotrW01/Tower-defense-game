@@ -124,7 +124,7 @@ public class MapEditor : MonoBehaviour
         var data = new MapData();
         int pointCount = shapeController.GetPointCount();
         data.name = mapName.text;
-        data.mapAuthor = NetworkManager.username;
+        data.mapAuthor = username;
         data.SplinePos = new Vector2[pointCount];
         data.TangentPos = new Vector2[pointCount * 2];
         data.terrainType = (Terrain)Enum.Parse(typeof(Terrain), terrainDropdown.options[terrainDropdown.value].text);
@@ -179,7 +179,7 @@ public class MapEditor : MonoBehaviour
 
     public void UploadMap()
     {
-        if (!NetworkManager.HasCredentialsSet())
+        if (!isLoggedIn)
         {
             ShowLoginFields();
             return;
@@ -198,10 +198,10 @@ public class MapEditor : MonoBehaviour
     {
         UploadRequest request = new UploadRequest();
         request.mapData = mapData;
-        request.username = NetworkManager.username;
-        request.password = NetworkManager.password;
+        //request.username = NetworkManager.username;
+        //request.password = NetworkManager.password;
         string jsonData = JsonUtility.ToJson(request);
-        UnityWebRequest www = CreateJsonRequest("http://localhost:5000/maps/upload", "PUT", jsonData);
+        UnityWebRequest www = CreateJsonRequest("maps/upload", "PUT", jsonData);
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)

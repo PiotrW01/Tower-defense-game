@@ -6,6 +6,8 @@ public class EnemyMovement2 : MonoBehaviour
 {
     private float speed; // The speed at which the enemy moves
     private readonly float turnSpeed = 5f;
+    [HideInInspector]
+    public float speedModifier = 1f;
 
     private float targetY;
     private Vector3 targetPosition; // The next point on the path the enemy needs to reach
@@ -16,7 +18,7 @@ public class EnemyMovement2 : MonoBehaviour
 
     void Start()
     {
-        speed = gameObject.GetComponent<baseEnemy>().GetSpeed();
+        speed = gameObject.GetComponent<baseEnemy>().speed;
         targetPosition = new Vector3(Waypoints.waypoints[1].x, 0.2f, Waypoints.waypoints[1].y);
 
         Vector3 targetDirection = targetPosition - transform.position;
@@ -29,7 +31,7 @@ public class EnemyMovement2 : MonoBehaviour
     private void Update()
     {
         // Move the enemy towards the target waypoint
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * speedModifier * Time.deltaTime);
         // Calculate the remaining distance between enemy and target waypoint
         distance = Vector3.Distance(gameObject.transform.position, targetPosition);
 

@@ -9,9 +9,9 @@ using UnityEngine;
 public class spawnEnemy : MonoBehaviour
 { //change class name to enemyspawner
     public static int enemiesAlive = 0;
-
+    public static float waveDelay = 10f;
     public int waveNumber = 0;
-    public bool isSpawning = false;
+    public static bool isSpawning = false;
     private WaveManager waveManager;
     public TextMeshProUGUI waveNumberText;
 
@@ -79,6 +79,8 @@ public class spawnEnemy : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(ForceNextWave());
+
         waveManager = new WaveManager(20);
         waveManager.Init();
         waveManager.AddInWave(0, new InWave(Enemy.APC_B1, 4, 2));
@@ -126,8 +128,8 @@ public class spawnEnemy : MonoBehaviour
         List<float> chances = new List<float> 
         {   
             5,
-            5 * difficulty,
-            5 * difficulty * 2,
+            4 * difficulty,
+            6 * difficulty,
         };
 
         var inWaveCount = new System.Random(waveNumber).Next(2,5);
@@ -137,7 +139,7 @@ public class spawnEnemy : MonoBehaviour
         {
             var rand = new System.Random(waveNumber + i);
             Enemy selectedEnemy = WeightedRandomPick(elements, chances, rand.Next());
-            int enemyAmount = rand.Next(5, 20);
+            int enemyAmount = rand.Next(5 + (int)difficulty, 20 + (int)difficulty);
             float spawnDelay = Mathf.Lerp(0.2f, 2.0f, (float)rand.NextDouble());
             InWave inWave = new InWave(selectedEnemy, enemyAmount, spawnDelay);
             waveManager.AddInWave(waveNumber, inWave);
@@ -192,5 +194,26 @@ public class spawnEnemy : MonoBehaviour
             currentInWave++;
         }
         isSpawning = false;
+    }
+
+    IEnumerator ForceNextWave()
+    {
+        while(waveNumber == 0) yield return null;
+
+        while (Player.isAlive)
+        {
+            if (!isSpawning && enemiesAlive == 0)
+            {
+                int lastWaveNumber = waveNumber;
+                yield return new WaitForSeconds(waveDelay);
+                Debug.Log(lastWaveNumber);
+                Debug.Log(waveNumber);
+                if (lastWaveNumber == waveNumber)
+                {
+                    SpawnWave();
+                }
+            }
+            yield return null;
+        }
     }
 }

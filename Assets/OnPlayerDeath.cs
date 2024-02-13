@@ -12,7 +12,7 @@ public class OnPlayerDeath : MonoBehaviour
     private void OnEnable()
     {
         totalKills.text = "Total kills: " + Player.totalKills.ToString();
-        totalMoney.text = "Total money spent: " + Player.totalMoneySpent.ToString();
-        totalWaves.text = "Waves survived: " + Player.totalWaves.ToString();
+        totalMoney.text = "Total money spent: " + Player.moneySpent.ToString();
+        totalWaves.text = "Waves survived: " + Player.waves.ToString();
     }
 }

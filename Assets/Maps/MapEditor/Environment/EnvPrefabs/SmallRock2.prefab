@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5363377603728646056}
   - component: {fileID: 3294695688182572382}
   - component: {fileID: -5619335820775989412}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: SmallRock2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 3488956678685917066}
   - component: {fileID: 8851981524507963357}
   - component: {fileID: 1371732191250572751}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Small Rock 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

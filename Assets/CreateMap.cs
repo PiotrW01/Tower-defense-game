@@ -13,6 +13,7 @@ public class CreateMap : MonoBehaviour
         createMap = GetComponent<Button>();
         createMap.onClick.AddListener( () =>
         {
+            SoundManager.Instance.PlayButtonClick();
             MapPreview.ChosenMapData = null;
             SceneManager.LoadScene("mapEditor");
         });

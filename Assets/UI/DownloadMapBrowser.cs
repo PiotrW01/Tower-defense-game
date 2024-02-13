@@ -43,7 +43,7 @@ public class DownloadMapBrowser : MonoBehaviour
         previousPage.interactable = false;
         nextPage.interactable = false;
 
-        var www = CreateJsonRequest("http://localhost:5000/maps/" + page, "GET", "");
+        var www = CreateJsonRequest("maps/" + page, "GET", "");
         yield return www.SendWebRequest();
         if (www.result != UnityWebRequest.Result.Success)
         {

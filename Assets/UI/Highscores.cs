@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,15 +28,17 @@ public class Highscores : MonoBehaviour
 
     IEnumerator GetMapScoresAsync(int id)
     {
-        var www = NetworkManager.CreateJsonRequest("http://localhost:5000/scores/" + id, "GET", "");
+        var www = NetworkManager.CreateJsonRequest("scores/" + id, "GET", "");
         yield return www.SendWebRequest();
+
         if (www.result != UnityWebRequest.Result.Success)
         {
             Debug.Log("Error: " + www.error);
         }
-        else
+        else if (id == MapPreview.ChosenMapData.id)
         {
             ScoresRequest req = JsonUtility.FromJson<ScoresRequest>(www.downloadHandler.text);
+            Array.Sort(req.scores, (score1, score2) => score2.totalScore.CompareTo(score1.totalScore));
             foreach (var score in req.scores)
             {
                 var scoreInfo = Instantiate(ScorePrefab, ScoreContainer).GetComponent<Score>();
@@ -44,6 +47,7 @@ public class Highscores : MonoBehaviour
             }
         }
 
+        www.Dispose();
         yield return null;
     }
 }

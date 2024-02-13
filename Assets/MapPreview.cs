@@ -22,19 +22,22 @@ public class MapPreview : MonoBehaviour, ISelectHandler, IDeselectHandler
 
         editButton.onClick.AddListener(() => 
         {
+            SoundManager.Instance.PlayButtonClick();
             ChosenMapData = mapData;
             SceneManager.LoadScene("mapEditor");
         });
 
         playButton.onClick.AddListener(() =>
         {
+            SoundManager.Instance.PlayButtonClick();
             ChosenMapData = mapData;
             SceneManager.LoadScene("game");
         });
 
         deleteButton.onClick.AddListener(() =>
         {
-            if (isDeleteConfirmed)
+            SoundManager.Instance.PlayButtonClick();
+            if (!isDeleteConfirmed)
             {
                 isDeleteConfirmed = true;
                 return;
@@ -46,6 +49,7 @@ public class MapPreview : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     public void OnSelect(BaseEventData eventData)
     {
+        ChosenMapData = mapData;
         GameObject.Find("HighScores").GetComponent<Highscores>().LoadScores(mapData.id);
     }
 

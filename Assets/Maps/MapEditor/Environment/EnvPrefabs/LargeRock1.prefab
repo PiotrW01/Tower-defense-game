@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5032283814046442025}
   - component: {fileID: -9198784629557943577}
   - component: {fileID: 7505369280269750744}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: LargeRock1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 7741028349820272304}
   - component: {fileID: 4102798959295868792}
   - component: {fileID: 1666303862479248849}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Large Rock 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

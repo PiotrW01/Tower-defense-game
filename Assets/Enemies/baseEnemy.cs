@@ -29,20 +29,13 @@ public abstract class baseEnemy : MonoBehaviour
     public void DealDamageToEnemy(float dmg)
     {
         health -= dmg;
+        Player.damageDone += (int)dmg;
         if(health <= 0)
         {
             Destroy(gameObject);
             Player.totalKills++;
             Player.AddMoney(droppedMoney);
         }
-    }
-    public float GetHealth()
-    {
-        return health;
-    }
-    public float GetSpeed()
-    {
-        return this.speed;
     }
 
     private void OnDestroy()

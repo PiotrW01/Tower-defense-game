@@ -9,7 +9,7 @@ public class PurchaseManager : MonoBehaviour
     public LayerMask terrainMask;
     public static bool isPlacing = false;
     public static GameObject TempStructure = null;
-
+    public static int tempPrice = 0;
 
     private void Start()
     {
@@ -48,9 +48,11 @@ public class PurchaseManager : MonoBehaviour
         HoldStructure();
     }
 
-    public static void CreateTempStructure(GameObject structure)
+    public static void CreateTempStructure(GameObject structure, int price)
     {
-        TempStructure = Instantiate(structure);
+        SoundManager.Instance.PlayButtonClick();
+        tempPrice = price;
+        TempStructure = Instantiate(structure, GameObject.Find("Player").transform);
         isPlacing = true;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -72,7 +74,11 @@ public class PurchaseManager : MonoBehaviour
 
     public void PlaceStructure()
     {
-        // adjust for turrets
+        SoundManager.Instance.PlayButtonClick();
+        if (!Player.CanBuy(tempPrice)) return;
+        Player.Buy(tempPrice);
+        tempPrice = 0;
+
         TempStructure.TryGetComponent<Turret>(out var turret);
         if(turret != null)
         {
@@ -83,5 +89,6 @@ public class PurchaseManager : MonoBehaviour
         isPlacing = false;
         Destroy(TempStructure.GetComponent<placeDetection>());
         TempStructure = null;
+        Player.structuresBuilt++;
     }
 }

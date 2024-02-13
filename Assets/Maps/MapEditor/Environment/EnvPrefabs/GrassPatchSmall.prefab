@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7276426525872365836}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: GrassPatchSmall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 5562956058969480097}
   - component: {fileID: 6826610207154308326}
   - component: {fileID: 255576855683645352}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Grass Patch Small
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,20 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelButtons : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Button scoreButton;
+    public TextMeshProUGUI scoreButtonTextMesh;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        if (!NetworkManager.isLoggedIn && scoreButton != null) scoreButton.interactable = false;
     }
 
     public void RestartLevel()
@@ -39,6 +38,41 @@ public class LevelButtons : MonoBehaviour
 
     public void UploadScore()
     {
+        scoreButton.interactable = false;
+        scoreButtonTextMesh.text = "Uploading...";
+        StartCoroutine(UploadScoreAsync());
+    }
 
+    IEnumerator UploadScoreAsync()
+    {
+        NetworkManager.UploadRequest request = new();
+        request.mapID = MapPreview.ChosenMapData.id;
+        request.mapData = MapPreview.ChosenMapData;
+        request.score = Player.score;
+        string jsonData = JsonUtility.ToJson(request);
+
+        var www = NetworkManager.CreateJsonRequest("scores/upload", "PUT", jsonData);
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Error: " + www.error);
+            scoreButtonTextMesh.text = "Failed to upload";
+            scoreButton.interactable = true;
+        } else
+        {
+            Debug.Log(www.responseCode);
+            if (www.responseCode == 201)
+            {
+                scoreButtonTextMesh.text = "Uploaded";
+            } else
+            {
+                scoreButtonTextMesh.text = "Failed to upload";
+                scoreButton.interactable = true;
+            }
+        }
+
+        www.Dispose();
+        yield break;
     }
 }

@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6305745085877882107}
   - component: {fileID: 7139106635109489960}
   m_Layer: 0
-  m_Name: NormalBullet
+  m_Name: MachineGunBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletFire: {fileID: 0}
   enemy: {fileID: 0}
-  baseDamage: 10
+  baseDamage: 2
   speed: 16
   aliveTime: 4
   damage: 2

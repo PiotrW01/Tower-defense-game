@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37da34f96205f7b468ee8314b9595395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  health: 10
   speed: 10.4
   droppedMoney: 3
   damageToPlayer: 1

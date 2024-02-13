@@ -6,6 +6,6 @@ public class NormalBullet : BaseBullet
 {
     public override void OnEnemyCollision(GameObject collision)
     {
-        collision.gameObject.GetComponent<enemy1>().DealDamageToEnemy(damage);
+        collision.gameObject.GetComponent<baseEnemy>().DealDamageToEnemy(damage);
     }
 }

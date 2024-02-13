@@ -76,20 +76,15 @@ public class SoundManager : MonoBehaviour
     {
         buttonSource.PlayOneShot(buttonSounds[0]);
     }
-
-    public void PlayTurretUpgrade()
+    public void PlayTurretDestroy()
     {
         buttonSource.PlayOneShot(buttonSounds[1]);
     }
 
-    public void PlayTurretPickPlace()
+    public void PlayTurretInfo()
     {
         buttonSource.PlayOneShot(buttonSounds[2]);
     }
 
-    public void PlayTurretDestroy()
-    {
-        buttonSource.PlayOneShot(buttonSounds[3]);
-    }
 
 }

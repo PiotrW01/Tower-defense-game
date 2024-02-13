@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5467519106466884751}
   - component: {fileID: 1464224570912264001}
   - component: {fileID: 2357898356865323889}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Small Rock 4 Moss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 7099030915911982627}
   - component: {fileID: 537862888743960918}
   - component: {fileID: 164537710491914211}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: SmallRock4Moss
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -16,7 +16,7 @@ public class enemyMovement : MonoBehaviour
 
     void Start()
     {
-        speed = gameObject.GetComponent<baseEnemy>().GetSpeed();
+        speed = gameObject.GetComponent<baseEnemy>().speed;
         target = Waypoints.waypoints[1]; // Set the target to the first waypoint
         //transform.LookAt(target);
         //transform.Rotate(new Vector3(0, 90, 0));

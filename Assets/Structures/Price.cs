@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
-public class CreateTurret : MonoBehaviour
+public class Price : MonoBehaviour
 {
-
+    public int price;
 }

@@ -8,13 +8,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2674982005328493741}
+  - component: {fileID: 2272199836838784358}
   - component: {fileID: 4598136437753995927}
-  - component: {fileID: 906709691548583384}
   - component: {fileID: 3399381773279556173}
   - component: {fileID: 2517684474660313692}
   - component: {fileID: -91149646599973058}
-  - component: {fileID: 707716127369125106}
+  - component: {fileID: -8642398026513008710}
   m_Layer: 7
   m_Name: Turret3
   m_TagString: Untagged
@@ -22,8 +21,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &2674982005328493741
-RectTransform:
+--- !u!4 &2272199836838784358
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -32,17 +31,12 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9026950918823619789}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4598136437753995927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56,14 +50,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canPlace: 1
---- !u!222 &906709691548583384
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3445561663977872858}
-  m_CullTransparentMesh: 1
 --- !u!54 &3399381773279556173
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -105,19 +91,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66fa3882a7cd55a4cbd5271a27fe7089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletPrefab: {fileID: 0}
-  isDoubleBarrel: 1
-  damageMultiplier: 1
+  BulletPrefab: {fileID: 7160226765689570107, guid: dcdccac53ffceb4459d18dd6dcba8895, type: 3}
   attackRadius: 1
-  cooldownTime: 1
+  cooldown: 0.2
   upgradeCost: 1
-  dmgUpgradeMultiplier: 1
-  cooldownUpgradeMultiplier: 1
-  radiusUpgradeMultiplier: 1
-  maxUpgradeLevel: 3
+  damageMultiplier: 1
+  cooldownMultiplier: 1.05
+  radiusMultiplier: 1.2
+  maxLevel: 3
   currentLevel: 0
   radius: {fileID: 5407738357408020866, guid: e2f526468faa3594abee4ea9c62a155b, type: 3}
---- !u!114 &707716127369125106
+--- !u!114 &-8642398026513008710
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,15 +110,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3445561663977872858}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aadcdb9361be47b40bda7e9dab24d283, type: 3}
+  m_Script: {fileID: 11500000, guid: f55c6859c79068145bfff4368bf743b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  price: 300
 --- !u!1001 &9027493993289262763
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 2674982005328493741}
+    m_TransformParent: {fileID: 2272199836838784358}
     m_Modifications:
     - target: {fileID: 1000010156534366, guid: ff744fa1e43cd5747a6732d0189a5a52, type: 3}
       propertyPath: m_Name
@@ -162,15 +147,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000013112085094, guid: ff744fa1e43cd5747a6732d0189a5a52, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.85
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4000013112085094, guid: ff744fa1e43cd5747a6732d0189a5a52, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.85
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4000013112085094, guid: ff744fa1e43cd5747a6732d0189a5a52, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.85
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4000013112085094, guid: ff744fa1e43cd5747a6732d0189a5a52, type: 3}
       propertyPath: m_LocalPosition.x
@@ -241,9 +226,9 @@ Animation:
   m_GameObject: {fileID: 9028473104130395381}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 9b1e4feebddfeed4286cd5e55f2b04e8, type: 2}
+  m_Animation: {fileID: 7400000, guid: edc8cccce85a4e0498cabad106aa5e12, type: 2}
   m_Animations:
-  - {fileID: 7400000, guid: 9b1e4feebddfeed4286cd5e55f2b04e8, type: 2}
+  - {fileID: 7400000, guid: edc8cccce85a4e0498cabad106aa5e12, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0

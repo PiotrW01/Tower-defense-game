@@ -1,22 +1,22 @@
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.TerrainUtils;
-using static StructureDictionary;
 
 
 public class Player : MonoBehaviour
 {
-    private Transform selectedStructure = null;
+    //private Transform selectedStructure = null;
     public GameObject MapPrefab;
     public static int health;
     public static int money;
+    public static int score = 0;
     public static bool isAlive;
-    public static int totalKills;
-    public static int totalMoneySpent;
-    public static int totalWaves;
+    public static int totalKills = 0;
+    public static int moneySpent = 0;
+    public static int waves = 0;
+    public static int damageTaken = 0;
+    public static int damageDone = 0;
+    public static int structuresBuilt = 0;
 
     private static TextMeshProUGUI moneyText;
     private static TextMeshProUGUI healthText;
@@ -29,13 +29,9 @@ public class Player : MonoBehaviour
         GameObject.Find("UserInterface").transform.Find("GameOverInterface").gameObject.SetActive(false);
 
         if(MapPreview.ChosenMapData != null) money = MapPreview.ChosenMapData.playerStartingMoney;
-        health = 100;
-
+        money = 9999;
+        health = 10;
         isAlive = true;
-        totalWaves = 0;
-        totalKills = 0;
-        totalMoneySpent = 0;
-
         healthText.text = health.ToString();
         moneyText.text = money.ToString();
     }
@@ -57,16 +53,18 @@ public class Player : MonoBehaviour
                 }
                 turret.ToggleTurretRadius();
             }
-        } else if (Input.GetMouseButtonDown(0)) // Togle structure info
+        } else if (Input.GetMouseButtonDown(0)) // Toggle structure info
         {
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                hit.collider.TryGetComponent<StructureInfo>(out var info);
-                if (info == null)
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Structure") && 
+                    !hit.collider.GetComponent<placeDetection>())
                 {
-                    return;
+                    ToggleInfo(hit.collider.gameObject);
+                } else
+                {
+                    ToggleInfo(null);
                 }
-                info.ToggleInfo();
             }
         }
     }
@@ -74,6 +72,7 @@ public class Player : MonoBehaviour
     public static void GameOver()
     {
         isAlive = false;
+        score = CalculateScore();
         SaveGameStatistics();
         GameObject.Find("UserInterface").transform.Find("GameOverInterface").gameObject.SetActive(true);
     }
@@ -83,6 +82,7 @@ public class Player : MonoBehaviour
         if (!isAlive) return;
         health -= damage;
         healthText.text = health.ToString();
+        damageTaken += damage;
 
         if (health <= 0)
         {
@@ -94,16 +94,21 @@ public class Player : MonoBehaviour
 
     public static void SaveGameStatistics()
     {
-        if(PlayerPrefs.GetInt("MaxWavesSurvived", 0) < totalWaves)
-        {
-            PlayerPrefs.SetInt("MaxWavesSurvived", totalWaves);
-        }
+        int overallMoneySpent = PlayerPrefs.GetInt("MoneySpent", 0);
+        PlayerPrefs.SetInt("MoneySpent", moneySpent + overallMoneySpent);
 
-        int overallMoneySpent = PlayerPrefs.GetInt("overallMoneySpent", 0);
-        PlayerPrefs.SetInt("overallMoneySpent", totalMoneySpent + overallMoneySpent);
+        int overallKills = PlayerPrefs.GetInt("Kills", 0);
+        PlayerPrefs.SetInt("Kills", overallKills + totalKills);
 
-        int overallKills = PlayerPrefs.GetInt("overallKills", 0);
-        PlayerPrefs.SetInt("overallKills", overallKills + totalKills);
+        int totalWaves = PlayerPrefs.GetInt("TotalWaves", 0);
+        PlayerPrefs.SetInt("TotalWaves", totalWaves + waves);
+
+        int overallStructuresBuilt = PlayerPrefs.GetInt("StructuresBuilt", 0);
+        PlayerPrefs.SetInt("StructuresBuilt", overallStructuresBuilt + structuresBuilt);
+
+        int highestWave = PlayerPrefs.GetInt("HighestWave", 0);
+        if(highestWave < waves)
+        PlayerPrefs.SetInt("HighestWave", waves);
 
         PlayerPrefs.Save();
     }
@@ -117,7 +122,7 @@ public class Player : MonoBehaviour
     public static void Buy(int cost)
     {
         money -= cost;
-        totalMoneySpent += cost;
+        moneySpent += cost;
         moneyText.text = money.ToString();
     }
 
@@ -126,9 +131,37 @@ public class Player : MonoBehaviour
         money += amount;
         moneyText.text = money.ToString();
     }
+    public static void ToggleInfo(GameObject structure)
+    {
+        GameObject infoInterface = GameObject.Find("UserInterface").transform.Find("InfoInterface").gameObject;
+        if (structure == null)
+        {
+            infoInterface.SetActive(false);
+            return;
+        }
+        StructureInfo info = infoInterface.GetComponent<StructureInfo>();
 
+        SoundManager.Instance.PlayTurretInfo();
+        if (infoInterface.activeInHierarchy)
+        {
+            if (info.selectedStructure.Equals(structure))
+            {
+                infoInterface.SetActive(false);
+            } else
+            {
+                info.selectedStructure = structure;
+                info.UpdateStats();
+            }
+
+        } else
+        {
+            info.selectedStructure = structure;
+            infoInterface.SetActive(true);
+        }
+    }
     public static int CalculateScore()
     {
-        return totalKills * 2 + totalWaves * 2;
+        return totalKills * 2 + waves * 2;
     }
+
 }

@@ -10,20 +10,23 @@ public abstract class BaseBullet : MonoBehaviour
 
     [HideInInspector]
     public GameObject enemy;
-    public float damage;
+    public float baseDamage;
     public float speed;
+    [HideInInspector]
+    public float aliveTime = 4f;
+    [HideInInspector]
+    public float damage;
 
     private Vector3 direction;
     private Vector3 lastEnemyPos;
-    public float aliveTime = 4f;
     private bool isTargetDead = false;
     protected bool hasHitAnEnemy = false;
     private ParticleSystem particles;
 
     private void Start()
     {
+        damage = baseDamage;
         particles = GetComponentInChildren<ParticleSystem>();
-        //Destroy(this, disableTime);
     }
 
     private void OnEnable()
@@ -31,6 +34,11 @@ public abstract class BaseBullet : MonoBehaviour
         if (enemy == null) return;
         SoundManager.Instance.PlaySound(bulletFire);
         StartCoroutine(DisableBullet(4f));
+    }
+
+    private void OnDisable()
+    {
+        
     }
 
     private void Update()
@@ -73,7 +81,6 @@ public abstract class BaseBullet : MonoBehaviour
 
             StopAllCoroutines();
             StartCoroutine(DisableBullet(2f));
-            //Destroy(this, 2f);
         }
     }
 
@@ -82,9 +89,9 @@ public abstract class BaseBullet : MonoBehaviour
         isTargetDead = false;
         hasHitAnEnemy = false;
         enemy = null;
+        damage = baseDamage;
         GetComponentInChildren<MeshRenderer>().enabled = true;
         gameObject.SetActive(false);
-        Debug.Log("reset");
     }
 
     public IEnumerator DisableBullet(float delay)
@@ -93,5 +100,8 @@ public abstract class BaseBullet : MonoBehaviour
         ResetBulletState();
     } 
 
-    public abstract void OnEnemyCollision(GameObject collision);
+    public virtual void OnEnemyCollision(GameObject collision)
+    {
+        collision.gameObject.GetComponent<baseEnemy>().DealDamageToEnemy(damage);
+    }
 }

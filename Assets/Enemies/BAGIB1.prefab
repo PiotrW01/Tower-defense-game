@@ -48,8 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37da34f96205f7b468ee8314b9595395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
-  speed: 10.4
+  health: 40
+  speed: 20.4
   droppedMoney: 3
   damageToPlayer: 1
 --- !u!54 &2287666079360309944
@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306a49d8840955f47b1f72b8c01c9863, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedModifier: 1
   waypointIndex: 1
   distance: 0
 --- !u!1001 &8313367944048435760

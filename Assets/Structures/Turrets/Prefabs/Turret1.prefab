@@ -8,13 +8,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2674982005328493741}
+  - component: {fileID: 3704304927791851971}
   - component: {fileID: 4598136437753995927}
-  - component: {fileID: 906709691548583384}
   - component: {fileID: 6452246730019885123}
   - component: {fileID: 4533309348168588649}
   - component: {fileID: -8156273391147847814}
-  - component: {fileID: 7689966113285748238}
+  - component: {fileID: -8858751337245919512}
   m_Layer: 7
   m_Name: Turret1
   m_TagString: Untagged
@@ -22,8 +21,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &2674982005328493741
-RectTransform:
+--- !u!4 &3704304927791851971
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -32,17 +31,12 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7991469177609768102}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4598136437753995927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56,14 +50,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canPlace: 1
---- !u!222 &906709691548583384
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3445561663977872858}
-  m_CullTransparentMesh: 1
 --- !u!54 &6452246730019885123
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -106,18 +92,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BulletPrefab: {fileID: 7160226765689570107, guid: 1e5be12d9a87fec4a9e58908b4374ae3, type: 3}
-  isDoubleBarrel: 0
-  damageMultiplier: 1
   attackRadius: 3
-  cooldownTime: 0.15
-  upgradeCost: 1
-  dmgUpgradeMultiplier: 1
-  cooldownUpgradeMultiplier: 1
-  radiusUpgradeMultiplier: 1
-  maxUpgradeLevel: 3
+  cooldown: 0.6
+  upgradeCost: 100
+  damageMultiplier: 1
+  cooldownMultiplier: 1.2
+  radiusMultiplier: 1.2
+  maxLevel: 3
   currentLevel: 0
   radius: {fileID: 5407738357408020866, guid: e2f526468faa3594abee4ea9c62a155b, type: 3}
---- !u!114 &7689966113285748238
+--- !u!114 &-8858751337245919512
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,15 +110,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3445561663977872858}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aadcdb9361be47b40bda7e9dab24d283, type: 3}
+  m_Script: {fileID: 11500000, guid: f55c6859c79068145bfff4368bf743b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  price: 300
 --- !u!1001 &7992010399124707168
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 2674982005328493741}
+    m_TransformParent: {fileID: 3704304927791851971}
     m_Modifications:
     - target: {fileID: 1000012666321240, guid: b5ceca2fab4f06f49aa235f4f428275a, type: 3}
       propertyPath: m_Layer
@@ -158,15 +143,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010650229702, guid: b5ceca2fab4f06f49aa235f4f428275a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.85
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4000010650229702, guid: b5ceca2fab4f06f49aa235f4f428275a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.85
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4000010650229702, guid: b5ceca2fab4f06f49aa235f4f428275a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.85
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4000010650229702, guid: b5ceca2fab4f06f49aa235f4f428275a, type: 3}
       propertyPath: m_LocalPosition.x
